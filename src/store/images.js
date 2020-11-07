@@ -3,15 +3,15 @@ const state = {
 }
 
 const mutations = {
-  fileAdded (state, payload) {
-
-    // this.state.selectedFile = payload[0]
-    // console.log(this.state.selectedFile, 'selectedFile from mutation')
-  },
   uploadFile (state, payload) {
     // Object.assign(state.images, payload)
     this.state.images.images.push(payload)
     console.log(this.state.images, 'images from mutation state')
+  },
+  deleteImage (state, payload) {
+    // Object.assign(state.images, payload)
+    this.state.images.images.splice(payload, 1)
+    // console.log(payload, 'from mutations')
   }
 }
 
@@ -20,6 +20,9 @@ const actions = {
     // this.state.images.images.push(this.state.selectedFile)
     // console.log(this.images, 'images')
     commit('uploadFile', payload)
+  },
+  deleteImage ({ commit }, payload) {
+    commit('deleteImage', payload)
   }
 }
 

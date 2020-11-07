@@ -34,7 +34,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('images', ['uploadFile', 'fileAdded']),
+    ...mapActions('images', ['uploadFile']),
     fileAdded (files) {
       this.selectedFile = files[0].__img
     }
