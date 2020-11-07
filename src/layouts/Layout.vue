@@ -12,10 +12,9 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Motivation posters
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -30,7 +29,7 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Dashboard
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -51,22 +50,23 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Images',
+    // caption: 'Total images',
+    icon: 'image',
+    link: '/images'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Albums',
+    // caption: 'github.com/quasarframework',
+    icon: 'perm_media',
+    link: '/albums'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Posters',
+    // caption: 'chat.quasar.dev',
+    // icon: 'branding_watermark',
+    icon: 'developer_board',
+    link: '/posters'
   }
 ]
 
@@ -76,7 +76,8 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      essentialLinks: linksData,
+      totalImages: 35
     }
   }
 }
