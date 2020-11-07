@@ -20,6 +20,7 @@ const actions = {
     // this.state.images.images.push(this.state.selectedFile)
     // console.log(this.images, 'images')
     commit('uploadFile', payload)
+    // console.log(payload, 'payload from actions')
   },
   deleteImage ({ commit }, payload) {
     commit('deleteImage', payload)

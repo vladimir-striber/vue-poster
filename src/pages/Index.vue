@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page padding>
-    <p>Welcome to our app! You can upload image below</p>
+    <p>Welcome to our app! You can upload your images below</p>
 
     <SelectImages />
 

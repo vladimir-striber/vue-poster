@@ -7,6 +7,7 @@
   flat
   bordered
   style="max-width: 300px;"
+  class="q-mb-md"
 >
 <template v-slot:header="scope">
   <div class="row no-wrap items-center q-pa-smq-gutter-xs">
@@ -36,7 +37,8 @@ export default {
   methods: {
     ...mapActions('images', ['uploadFile']),
     fileAdded (files) {
-      this.selectedFile = files[0].__img
+      // this.selectedFile = files[0].__img
+      this.selectedFile = files[0]
     }
 
   }

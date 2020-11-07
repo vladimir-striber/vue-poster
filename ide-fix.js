@@ -57,3 +57,6 @@ Vue.component('q-tooltip', {
 Vue.component('q-uploader-add-trigger', {
   props: {}
 });
+Vue.component('q-avatar', {
+  props: {}
+});
