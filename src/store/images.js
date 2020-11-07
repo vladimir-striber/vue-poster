@@ -1,22 +1,26 @@
 const state = {
-  images: [
-    {
-      name: 'Aheron',
-      country: 'Greece'
-    },
-    {
-      name: 'Dunav',
-      country: 'Serbia'
-    }
-  ]
+  images: []
 }
 
 const mutations = {
+  fileAdded (state, payload) {
 
+    // this.state.selectedFile = payload[0]
+    // console.log(this.state.selectedFile, 'selectedFile from mutation')
+  },
+  uploadFile (state, payload) {
+    // Object.assign(state.images, payload)
+    this.state.images.images.push(payload)
+    console.log(this.state.images, 'images from mutation state')
+  }
 }
 
 const actions = {
-
+  uploadFile ({ commit }, payload) {
+    // this.state.images.images.push(this.state.selectedFile)
+    // console.log(this.images, 'images')
+    commit('uploadFile', payload)
+  }
 }
 
 const getters = {
