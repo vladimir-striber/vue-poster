@@ -40,7 +40,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view @emitImages.prevent />
     </q-page-container>
   </q-layout>
 </template>
@@ -49,6 +49,12 @@
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
+  {
+    title: 'Home',
+    // caption: 'Total images',
+    icon: 'home',
+    link: '/'
+  },
   {
     title: 'Images',
     // caption: 'Total images',
