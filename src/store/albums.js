@@ -15,15 +15,14 @@ const mutations = {
     })
     this.state.albums.album.posters = this.state.albums.posters
     this.state.albums.albums.push(this.state.albums.album)
+    // resetting posters
     this.state.albums.posters = []
+    // resetting albums
     this.state.albums.album = {}
     console.log(this.state.albums.album, 'album from mutations')
     console.log(this.state.albums.albums, 'albums from mutations')
-    // this.state.albums.albums.push(payload)
-    // console.log(payload, this.state.album, 'albums from mutation state')
   },
   deleteAlbum (state, payload) {
-    // console.log(payload, this.state.albums, 'albums delete from mutation state')
     this.state.albums.albums.splice(payload, 1)
   }
 }
@@ -49,7 +48,6 @@ const getters = {
   albums: (state) => {
     return state.albums
   }
-
 }
 
 export default {

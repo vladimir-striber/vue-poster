@@ -7,7 +7,8 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: '/images', component: () => import('pages/Images.vue') },
       { path: '/albums', component: () => import('pages/Albums.vue') },
-      { path: '/posters', component: () => import('pages/Posters.vue') }
+      { path: '/posters', component: () => import('pages/Posters.vue') },
+      { path: '/album/:albumIndex', props: true, name: 'album', component: () => import('pages/Album.vue') }
     ]
   },
 

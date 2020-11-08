@@ -3,12 +3,16 @@
 
       <div class="album">
         <q-card v-for="(album, index) in albums" :key="index" flat bordered class="albumCard">
-          <q-card-section class="row justify-between">
+          <q-card-section class="row justify-between albumCard__header">
             <span class="text-h6 q-mb-xs">{{ album.title }}</span>
             <q-card-actions align="right" class="q-pa-none">
-              <q-btn flat round size="sm" color="red" icon="remove_red_eye" class="albumCard__btn"></q-btn>
+              <!--<router-link :to="{name: 'Album', params: { albumIndex: album[index] }}">-->
+                <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="red" icon="remove_red_eye" class="albumCard__btn q-ml-xs"></q-btn>
+                <!--@click="$router.push({name: 'Album', params: { albumIndex: album[index] }})"-->
+              <!--</router-link>-->
+
               <q-btn flat round size="sm" color="teal" icon="edit" class="albumCard__btn"></q-btn>
-              <q-btn flat round size="sm" color="primary" icon="close" class="albumCard__btn"></q-btn>
+              <q-btn flat round size="sm" color="primary" icon="close" class="albumCard__btn albumCard__btn--delete"></q-btn>
             </q-card-actions>
           </q-card-section>
 
@@ -57,12 +61,23 @@ export default {
     max-height: 250px;
     flex-basis: calc(50% - 8px);
     margin-right: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .albumCard__header {
+    background-color: #eee;
   }
 
   .albumCard__btn {
     width: 32px;
     height: 32px;
+    margin-left: 0 !important;
   }
+
+  /*.albumCard__btn--delete {*/
+    /*margin-left: 0 !important;*/
+  /*}*/
 
   .albumCard__content {
     display: flex;
@@ -72,8 +87,7 @@ export default {
 
   .albumCard__imgWrapper {
     margin-right: 8px;
-    display: flex;
-    align-items: start;
+    margin-top: 8px;
   }
 
   .albumCard__img {
