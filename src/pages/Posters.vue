@@ -6,11 +6,18 @@
       <q-item v-for="(poster, index) in posters" :key="index" class="col-4 q-gutter-md wrap">
 
         <div class="posterWrapper q-ma-none q-pa-sm">
-          <img :src="poster.image.selectedFile.__img.src"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+          <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
 
           <div class="poster__overlay">
             <div class="poster__actions">
-              <q-btn round color="primary" icon="close" size="8px" class="absolute-top-right q-ma-xs image__delete" @click="deletePoster(index)" />
+              <q-btn
+                  round
+                  color="primary"
+                  icon="close"
+                  size="8px"
+                  class="absolute-top-right q-ma-xs image__delete"
+                  @click="deletePoster(index)"
+              />
             </div>
           </div>
           <div class="posterDescription">
@@ -41,10 +48,7 @@ export default {
     ...mapGetters('posters', ['posters'])
   },
   methods: {
-    ...mapActions('posters', ['deletePoster']),
-    deletePoster () {
-
-    }
+    ...mapActions('posters', ['deletePoster'])
   }
 }
 </script>

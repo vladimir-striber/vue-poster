@@ -8,7 +8,8 @@ const mutations = {
     console.log(this.state.posters, 'posters from mutation state')
   },
   deletePoster (state, payload) {
-    // this.state.images.images.splice(payload, 1)
+    // console.log(payload, this.state.posters, 'posters delete from mutation state')
+    this.state.posters.posters.splice(payload, 1)
   }
 }
 
@@ -19,6 +20,7 @@ const actions = {
   },
   deletePoster ({ commit }, payload) {
     commit('deletePoster', payload)
+    // console.log(payload, 'payload from actions')
   }
 }
 

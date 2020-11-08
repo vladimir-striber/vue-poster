@@ -12,7 +12,7 @@
               color="secondary"
               size="8px"
               class="q-ma-xs image__makePoster"
-              @click.stop="openCreateDialog()"
+              @click.stop="openCreateDialog(image.selectedFile.__img.src)"
           >
             Create a poster
           </q-btn>
@@ -29,7 +29,7 @@
         <!--Dialog for poster create-->
         <q-dialog v-model="dialog" class="posterDialog">
           <q-card class="my-card posterDialog__card">
-            <q-img :src="image.selectedFile.__img.src"></q-img>
+            <q-img :src="imageSrc"></q-img>
 
             <q-card-section class="q-pt-none">
               <q-input v-model="title" label="Title" />
@@ -37,7 +37,14 @@
             </q-card-section>
 
             <q-card-actions align="right">
-              <q-btn @click="uploadPoster({image: image, title: title, caption: caption})" style="width: 100px" flat color="secondary" label="Create" class="text-capitalize"></q-btn>
+              <q-btn
+                  @click="uploadPoster({image: imageSrc, title: title, caption: caption}); clearPosterDialog()"
+                  style="width: 100px"
+                  flat
+                  color="secondary"
+                  label="Create"
+                  class="text-capitalize"
+              ></q-btn>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -62,7 +69,8 @@ export default {
     return {
       dialog: false,
       title: '',
-      caption: ''
+      caption: '',
+      imageSrc: ''
     }
   },
   computed: {
@@ -72,8 +80,15 @@ export default {
   methods: {
     ...mapActions('images', ['deleteImage']),
     ...mapActions('posters', ['uploadPoster']),
-    openCreateDialog () {
+    openCreateDialog (imageSrc) {
       this.dialog = true
+      this.imageSrc = imageSrc
+    },
+    clearPosterDialog () {
+      this.dialog = false
+      this.title = ''
+      this.caption = ''
+      this.imageSrc = ''
     }
   }
 }
