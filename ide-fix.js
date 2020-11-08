@@ -81,3 +81,6 @@ Vue.component('q-card-actions', {
 Vue.component('q-input', {
   props: {}
 });
+Vue.component('q-checkbox', {
+  props: {}
+});

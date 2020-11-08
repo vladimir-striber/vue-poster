@@ -38,12 +38,12 @@
 
             <q-card-actions align="right">
               <q-btn
-                  @click="uploadPoster({image: imageSrc, title: title, caption: caption}); clearPosterDialog()"
-                  style="width: 100px"
+                  @click="uploadPoster({image: imageSrc, title: title, caption: caption, selected: false}); clearPosterDialog()"
+                  style="width: 170px"
                   flat
                   color="secondary"
-                  label="Create"
-                  class="text-capitalize"
+                  label="Create new poster"
+                  no-caps
               ></q-btn>
             </q-card-actions>
           </q-card>
