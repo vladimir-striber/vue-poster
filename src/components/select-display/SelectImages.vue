@@ -10,12 +10,14 @@
   class="q-mb-md"
 >
 <template v-slot:header="scope">
-  <div class="row no-wrap items-center q-pa-smq-gutter-xs">
+  <div class="row no-wrap items-center q-pa-xs justify-between">
+    <span v-if="scope.canAddFiles" class="q-ml-xs block">Select an image</span>
     <q-btn v-if="scope.canAddFiles" type="a" icon="add_box" round dense flat>
       <q-uploader-add-trigger />
       <q-tooltip>Select image</q-tooltip>
     </q-btn>
-    <q-btn v-if="scope.canUpload" icon="image" round dense flat @click="uploadFile({ selectedFile: selectedFile }); scope.removeQueuedFiles()">
+    <span v-if="scope.canUpload" class="q-ml-xs block">Save selected image</span>
+    <q-btn v-if="scope.canUpload" icon="check" round dense flat @click="uploadFile({ selectedFile: selectedFile }); scope.removeQueuedFiles()">
       <q-tooltip>Upload to the image gallery</q-tooltip>
     </q-btn>
   </div>

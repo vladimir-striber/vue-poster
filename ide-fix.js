@@ -60,3 +60,24 @@ Vue.component('q-uploader-add-trigger', {
 Vue.component('q-avatar', {
   props: {}
 });
+Vue.component('q-dialog', {
+  props: {}
+});
+Vue.component('q-img', {
+  props: {}
+});
+Vue.component('q-card-section', {
+  props: {}
+});
+Vue.component('q-card', {
+  props: {}
+});
+Vue.component('q-separator', {
+  props: {}
+});
+Vue.component('q-card-actions', {
+  props: {}
+});
+Vue.component('q-input', {
+  props: {}
+});

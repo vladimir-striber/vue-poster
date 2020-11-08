@@ -1,20 +1,29 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 <q-page padding>
-  <p>Images</p>
+  <p class="q-mb-xl">Images</p>
 
-  <q-list class="row">
+  <q-list class="row q-pt-md">
     <q-item v-for="(image, index) in images" :key="index" class="col-4 q-gutter-md wrap">
 
-      <div class="image-wrapper" @mouseover="imageOverlay = true" @mouseleave="imageOverlay = false">
+      <div class="image__wrapper q-ma-none">
         <img :src="image.selectedFile.__img.src"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+        <div class="image__overlay">
+          <div class="image__actions">
+            <q-btn
+                round
+                color="primary"
+                icon="add"
+                size="8px"
+                class="absolute-top-left q-ma-xs image__makePoster"
+                @click="testFile(image, index)"
+            >
+              <q-tooltip>Make a poster</q-tooltip>
+            </q-btn>
 
-        <div v-if="imageOverlay" class="image__overlay">
-          <q-btn round color="primary" icon="remove_red_eye" />
+            <q-btn round color="primary" icon="close" size="8px" class="absolute-top-right q-ma-xs image__delete" @click="deleteImage(index)" />
+          </div>
         </div>
-      </div>
 
-      <div class="q-pa-md q-gutter-sm absolute-top-right">
-        <q-btn round color="primary" icon="close" size="8px" @click="deleteImage(index)" />
       </div>
 
     </q-item>
@@ -30,14 +39,16 @@ export default {
   name: 'Images',
   data () {
     return {
-      imageOverlay: false
     }
   },
   computed: {
     ...mapGetters('images', ['images'])
   },
   methods: {
-
+    testFile (image, index) {
+      console.log(image, index, 'image & index')
+      image.selectedFile.capture = `test capture for ${index}`
+    }
   }
 }
 </script>
@@ -45,17 +56,24 @@ export default {
 <style lang="scss" scoped>
   @import "../css/quasar.variables.scss";
 
-  .image-wrapper {
-    position: relative;
+  .image__overlay {
+    display: none;
   }
 
-  .image__overlay {
-    background-color: rgba(0,0,0,0.7);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
+  .image__wrapper {
+    position: relative;
+    transition: ease-in-out 2s;
+    &:hover {
+      .image__overlay {
+        display: block;
+        background-color: rgba(0,0,0,0.7);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
   }
 
 </style>
