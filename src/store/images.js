@@ -3,8 +3,11 @@ const state = {
 }
 
 const mutations = {
-  uploadFile (state, payload) {
-    this.state.images.images.push(payload)
+  uploadFiles (state, payload) {
+    payload.selectedFiles.forEach((image) => {
+      this.state.images.images.push(image)
+    })
+
     console.log(this.state.images, 'images from mutation state')
   },
   deleteImage (state, payload) {
@@ -13,8 +16,8 @@ const mutations = {
 }
 
 const actions = {
-  uploadFile ({ commit }, payload) {
-    commit('uploadFile', payload)
+  uploadFiles ({ commit }, payload) {
+    commit('uploadFiles', payload)
   },
   deleteImage ({ commit }, payload) {
     commit('deleteImage', payload)

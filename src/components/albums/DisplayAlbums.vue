@@ -6,13 +6,13 @@
           <q-card-section class="row justify-between albumCard__header">
             <span class="text-h6 q-mb-xs">{{ album.title }}</span>
             <q-card-actions align="right" class="q-pa-none">
-              <!--<router-link :to="{name: 'Album', params: { albumIndex: album[index] }}">-->
-                <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="red" icon="remove_red_eye" class="albumCard__btn q-ml-xs"></q-btn>
-                <!--@click="$router.push({name: 'Album', params: { albumIndex: album[index] }})"-->
-              <!--</router-link>-->
 
-              <q-btn flat round size="sm" color="teal" icon="edit" class="albumCard__btn"></q-btn>
+              <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="red" icon="remove_red_eye" class="albumCard__btn q-ml-xs"></q-btn>
+
+              <q-btn @click="openEditDialog(index)" flat round size="sm" color="teal" icon="edit" class="albumCard__btn"></q-btn>
+
               <q-btn flat round size="sm" color="primary" icon="close" class="albumCard__btn albumCard__btn--delete"></q-btn>
+
             </q-card-actions>
           </q-card-section>
 
@@ -24,6 +24,51 @@
             </div>
           </q-card-section>
 
+          <!--Dialog for album create-->
+          <q-dialog v-model="dialog" persistent class="posterDialog">
+
+            <!--{{albums[editIndex]}}-->
+
+            <q-card v-if="editIndex === 0 || editIndex > 0" class="my-card posterDialog__card">
+
+              <q-input v-model="albums[editIndex].title" label="Title" />
+              <q-list bordered>
+                <q-item v-for="(poster, index) in posters" :key="index" clickable v-ripple>
+
+                  <q-item-section thumbnail class="q-pl-sm">
+                    <img :src="poster.image" alt="image">
+                  </q-item-section>
+                  <q-item-section>{{ poster.title }} / {{ poster.caption }}</q-item-section>
+
+                  <q-checkbox :value="poster.selected" @input="selectPoster(index)" />
+
+                </q-item>
+
+              </q-list>
+
+              <q-card-actions align="right">
+                <q-btn
+                    style="width: 150px"
+                    flat
+                    color="primary"
+                    label="Cancel"
+                    no-caps
+                    v-close-popup
+                ></q-btn>
+                <q-btn
+                    @click="updateAlbum({index: editIndex, posters: posters, title: albums[editIndex].title}); clearPosterSelections()"
+                    style="width: 150px"
+                    flat
+                    color="secondary"
+                    label="Save"
+                    no-caps
+                    v-close-popup
+                ></q-btn>
+              </q-card-actions>
+
+            </q-card>
+          </q-dialog>
+
         </q-card>
       </div>
 
@@ -34,17 +79,33 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'DisplayAlbums',
+  data () {
+    return {
+      dialog: false,
+      editIndex: '',
+      titleEdited: ''
+    }
+  },
   computed: {
     ...mapGetters('posters', ['posters']),
     ...mapGetters('albums', ['albums'])
   },
   methods: {
-    ...mapActions('albums', ['deleteAlbum', 'uploadAlbum']),
+    ...mapActions('albums', ['deleteAlbum', 'updateAlbum', 'uploadAlbum']),
     ...mapActions('posters', ['selectPoster', 'clearPosterSelections']),
-    clearAlbumDialog () {
-      this.dialog = false
-      this.title = ''
+    openEditDialog (index) {
+      this.editIndex = index
+      this.dialogStateMutate()
+    },
+    dialogStateMutate () {
+      setTimeout(() => {
+        this.dialog = true
+      })
     }
+    // clearAlbumDialog () {
+    //   this.dialog = false
+    //   this.title = ''
+    // }
   }
 }
 </script>

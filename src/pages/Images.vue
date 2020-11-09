@@ -6,7 +6,7 @@
     <q-item v-for="(image, index) in images" :key="index" class="col-4 q-gutter-md wrap">
 
       <div class="image__wrapper q-ma-none">
-        <img :src="image.selectedFile.__img.src"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+        <img :src="image.__img.src"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
         <div class="image__overlay">
           <div class="image__actions">
             <q-btn

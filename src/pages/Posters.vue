@@ -3,7 +3,7 @@
     <p class="q-mb-xl">Posters</p>
 
     <q-list class="row q-pt-md">
-      <q-item v-for="(poster, index) in posters" :key="index" class="col-4 q-gutter-md wrap">
+      <q-item v-for="(poster, index) in posters" :key="index" class="col-12 col-sm-6 col-md-4 q-gutter-md wrap">
 
         <div class="posterWrapper q-ma-none q-pa-sm">
           <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
@@ -63,7 +63,10 @@ export default {
     position: relative;
     background-color: darkslategrey;
     transition: ease-in-out 200ms;
-    max-height: 300px;
+    /*max-height: 300px;*/
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
     &:hover {
       .poster__overlay {
       display: block;
@@ -78,14 +81,15 @@ export default {
     }
   }
   .posterDescription {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: relative;
+    /*bottom: 0;*/
+    /*left: 0;*/
   }
 
   .image {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: auto;
+    /*max-height: 100%;*/
   }
 
 </style>

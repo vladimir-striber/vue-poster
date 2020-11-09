@@ -24,7 +24,7 @@
 
         <q-card-actions align="right">
           <q-btn
-              @click="uploadAlbum({posters: posters, title: title}); clearAlbumDialog(); clearPosterSelections()"
+              @click="uploadAlbum({posters: posters, title: title}); clearAlbumDialog(); clearPosterSelections();"
               style="width: 150px"
               flat
               color="secondary"

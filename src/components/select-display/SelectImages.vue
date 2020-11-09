@@ -3,6 +3,8 @@
   @added="fileAdded"
   url="http://localhost:8080"
   accept=".jpg, .pdf, image/*, .png"
+  multiple
+  batch
   color="teal"
   flat
   bordered
@@ -17,7 +19,7 @@
       <q-tooltip>Select image</q-tooltip>
     </q-btn>
     <span v-if="scope.canUpload" class="q-ml-xs block">Save selected image</span>
-    <q-btn v-if="scope.canUpload" icon="check" round dense flat @click="uploadFile({ selectedFile: selectedFile }); scope.removeQueuedFiles()">
+    <q-btn v-if="scope.canUpload" icon="check" round dense flat @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()">
       <q-tooltip>Upload to the image gallery</q-tooltip>
     </q-btn>
   </div>
@@ -32,15 +34,16 @@ export default {
   name: 'SelectImages',
   data () {
     return {
-      selectedFile: ''
+      selectedFiles: ''
     }
   },
 
   methods: {
-    ...mapActions('images', ['uploadFile']),
+    ...mapActions('images', ['uploadFiles']),
     fileAdded (files) {
-      // this.selectedFile = files[0].__img
-      this.selectedFile = files[0]
+      // this.selectedFiles = files[0].__img
+      this.selectedFiles = files
+      // console.log(files, 'files')
     }
 
   }

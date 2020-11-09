@@ -4,15 +4,15 @@
       <q-item v-for="(image, index) in images" :key="index" clickable v-ripple>
 
         <q-item-section thumbnail class="q-pl-sm">
-          <img :src="image.selectedFile.__img.src" alt="image">
+          <img :src="image.__img.src" alt="image">
         </q-item-section>
-        <q-item-section>{{ image.selectedFile.name }} / {{ image.selectedFile.__sizeLabel }}</q-item-section>
+        <q-item-section>{{ image.name }} / {{ image.__sizeLabel }}</q-item-section>
         <div class="q-pa-md q-ma-none q-gutter-sm absolute-right row items-center">
           <q-btn
               color="secondary"
               size="8px"
               class="q-ma-xs image__makePoster"
-              @click.stop="openCreateDialog(image.selectedFile.__img.src)"
+              @click.stop="openCreatePosterDialog(image.__img.src)"
           >
             Create a poster
           </q-btn>
@@ -80,7 +80,7 @@ export default {
   methods: {
     ...mapActions('images', ['deleteImage']),
     ...mapActions('posters', ['uploadPoster']),
-    openCreateDialog (imageSrc) {
+    openCreatePosterDialog (imageSrc) {
       this.dialog = true
       this.imageSrc = imageSrc
     },
