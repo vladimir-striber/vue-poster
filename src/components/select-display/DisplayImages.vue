@@ -33,12 +33,13 @@
 
             <q-card-section class="q-pt-none">
               <q-input v-model="title" label="Title" />
-              <q-input v-model="caption" label="Caption" />
+              <q-input v-model="caption" label="Caption" class="q-mb-sm" />
+              <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
             </q-card-section>
 
             <q-card-actions align="right">
               <q-btn
-                  @click="uploadPoster({image: imageSrc, title: title, caption: caption, selected: false}); clearPosterDialog()"
+                  @click="uploadPoster({image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
                   style="width: 170px"
                   flat
                   color="secondary"
@@ -53,24 +54,53 @@
 
     </q-list>
 
-    <!--<PosterCreate ref="PosterCreate" :dialogImage="dialogImage" />-->
-
   </div>
 
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import PosterCreate from '../posters/PosterCreate'
 export default {
   name: 'DisplayImages',
-  // components: { PosterCreate },
   data () {
     return {
       dialog: false,
       title: '',
       caption: '',
-      imageSrc: ''
+      imageSrc: '',
+      posterBackground: false,
+      colors: [
+        {
+          name: 'blue-grey-10',
+          code: '#263238',
+          state: false
+        },
+        {
+          name: 'deep-purple-7',
+          code: '#5e35b1',
+          state: false
+        },
+        {
+          name: 'cyan-9',
+          code: '#00838f',
+          state: false
+        },
+        {
+          name: 'deep-orange-9',
+          code: '#d84315',
+          state: false
+        },
+        {
+          name: 'teal-9',
+          code: '#00695c',
+          state: false
+        },
+        {
+          name: 'amber-9',
+          code: '#ff8f00',
+          state: false
+        }
+      ]
     }
   },
   computed: {
@@ -89,6 +119,13 @@ export default {
       this.title = ''
       this.caption = ''
       this.imageSrc = ''
+    },
+    selectColor (colorIndex) {
+      this.posterBackground = this.colors[colorIndex].code
+      // this.colors[colorIndex].state = true
+      for (let i = 0; i < this.colors.length; i++) {
+        i === colorIndex ? this.colors[i].state = true : this.colors[i].state = false
+      }
     }
   }
 }

@@ -6,27 +6,26 @@
 
       <div v-for="(poster, index) in posters" :key="index" class="box">
 
-        <!--<div class="posterWrapper q-ma-none q-pa-sm">-->
-          <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+        <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
+        <!--:style="`poster.posterBackground ? background-color: poster.posterBackground : background-color: #eee`"-->
+        <!--:style="poster.posterBackground ? 'background-color: poster.posterBackground' : 'background-color: #eee'"-->
 
-          <div class="poster__overlay">
-            <div class="poster__actions">
-              <q-btn
-                  round
-                  color="primary"
-                  icon="close"
-                  size="8px"
-                  class="absolute-top-right q-ma-xs image__delete"
-                  @click="deletePoster(index)"
-              />
-            </div>
+        <div class="poster__overlay">
+          <div class="poster__actions">
+            <q-btn
+                round
+                color="primary"
+                icon="close"
+                size="8px"
+                class="absolute-top-right q-ma-xs image__delete"
+                @click="deletePoster(index)"
+            />
           </div>
-          <div class="posterDescription">
-            <div class="text-h6"><span>{{poster.title}}</span></div>
-            <div><span>{{poster.caption}}</span></div>
-          </div>
-
-        <!--</div>-->
+        </div>
+        <div class="posterDescription">
+          <div class="text-h6"><span>{{poster.title}}</span></div>
+          <div><span>{{poster.caption}}</span></div>
+        </div>
 
       </div>
     </div>
@@ -82,12 +81,10 @@ export default {
       width: 100%;
       margin: 0 0 8px;
       padding: 4px;
-      background-color: $light-e;
       overflow: hidden;
       break-inside: avoid;
       transition: 0.2s;
       &:hover {
-        background-color: #ddd;
         transform: scale(1.03);
         cursor: pointer;
       }
