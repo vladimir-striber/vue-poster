@@ -1,11 +1,12 @@
 <template>
-  <q-page padding>
-    <p class="q-mb-xl">Posters</p>
+  <q-page class="q-px-lg q-py-none">
+    <h1>Posters</h1>
 
-    <q-list class="row q-pt-md">
-      <q-item v-for="(poster, index) in posters" :key="index" class="col-12 col-sm-6 col-md-4 q-gutter-md wrap">
+    <div class="container">
 
-        <div class="posterWrapper q-ma-none q-pa-sm">
+      <div v-for="(poster, index) in posters" :key="index" class="box">
+
+        <!--<div class="posterWrapper q-ma-none q-pa-sm">-->
           <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
 
           <div class="poster__overlay">
@@ -21,14 +22,14 @@
             </div>
           </div>
           <div class="posterDescription">
-            <h2 class="text-h6">{{poster.title}}</h2>
-            <p>{{poster.caption}}</p>
+            <div class="text-h6"><span>{{poster.title}}</span></div>
+            <div><span>{{poster.caption}}</span></div>
           </div>
 
-        </div>
+        <!--</div>-->
 
-      </q-item>
-    </q-list>
+      </div>
+    </div>
 
   </q-page>
 
@@ -54,6 +55,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  @import "../css/fonts.scss";
+
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    font-family: $montserrat-bold;
+  }
+
+  .container {
+    width: 100%;
+    /*margin: 0 auto;*/
+    columns: 1;
+    column-gap: 8px;
+    @media screen and (min-width: $width-sm) {
+      columns: 2;
+    }
+    @media screen and (min-width: $width-md) {
+      columns: 3;
+    }
+    @media screen and (min-width: $width-xl) {
+      columns: 4;
+    }
+    .box {
+      width: 100%;
+      margin: 0 0 8px;
+      padding: 4px;
+      background-color: $light-e;
+      overflow: hidden;
+      break-inside: avoid;
+      transition: 0.2s;
+      &:hover {
+        background-color: #ddd;
+        transform: scale(1.03);
+        cursor: pointer;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+  }
 
   .poster__overlay {
     display: none;
@@ -82,6 +124,7 @@ export default {
   }
   .posterDescription {
     position: relative;
+    padding: 4px;
     /*bottom: 0;*/
     /*left: 0;*/
   }

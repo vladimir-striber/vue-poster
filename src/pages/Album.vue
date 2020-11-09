@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md">
-    <h2>{{albums[albumIndex].title}}</h2>
+  <q-page class="q-px-lg q-py-none">
+    <h1>{{albums[albumIndex].title}}</h1>
     <div>
       <q-list class="q-pa-md q-col-gutter-md row items-start">
         <q-item v-for="(poster, index) in albums[albumIndex].posters" :key="index" class="col-4 q-gutter-md wrap">
@@ -29,7 +29,7 @@
         </q-item>
       </q-list>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -44,6 +44,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "../css/fonts.scss";
+
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    font-family: $montserrat-bold;
+  }
 
   .poster__overlay {
     display: none;

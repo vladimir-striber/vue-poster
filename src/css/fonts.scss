@@ -1,0 +1,10 @@
+// fonts
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Montserrat-Bold'), url('../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+}
+
+$montserrat-bold: 'Montserrat Bold', sans-serif;

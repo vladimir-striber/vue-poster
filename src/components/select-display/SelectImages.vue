@@ -1,31 +1,37 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-<q-uploader
-  @added="fileAdded"
-  url="http://localhost:8080"
-  accept=".jpg, .pdf, image/*, .png"
-  multiple
-  batch
-  color="teal"
-  flat
-  bordered
-  style="max-width: 300px;"
-  class="q-mb-md"
->
-<template v-slot:header="scope">
-  <div class="row no-wrap items-center q-pa-xs justify-between">
-    <span v-if="scope.canAddFiles" class="q-ml-xs block">Select an image</span>
-    <q-btn v-if="scope.canAddFiles" type="a" icon="add_box" round dense flat>
-      <q-uploader-add-trigger />
-      <q-tooltip>Select image</q-tooltip>
-    </q-btn>
-    <span v-if="scope.canUpload" class="q-ml-xs block">Save selected image</span>
-    <q-btn v-if="scope.canUpload" icon="check" round dense flat @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()">
-      <q-tooltip>Upload to the image gallery</q-tooltip>
-    </q-btn>
-  </div>
-</template>
+  <div class="row">
+    <div class="col col-md-6">
+      <q-uploader
+          @added="fileAdded"
+          url="http://localhost:8080"
+          accept=".jpg, .pdf, image/*, .png"
+          multiple
+          batch
+          color="teal"
+          flat
+          bordered
+          style="max-width: 300px;"
+          class="q-mb-md col col-md-6 uploader"
+      >
+        <template v-slot:header="scope">
+          <div class="row no-wrap items-center q-pa-xs justify-between selectionHeader">
+            <q-btn v-if="scope.canAddFiles" flat no-caps>
+              <q-uploader-add-trigger />
+              <q-icon name="add_box" class="q-mr-xs"></q-icon>
+              <span>Select</span>
+            </q-btn>
+            <q-btn v-if="scope.canUpload" @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()" flat no-caps>
+              <q-icon name="check" class="q-mr-xs"></q-icon>
+              <span>Save</span>
+            </q-btn>
+          </div>
+        </template>
 
-</q-uploader>
+      </q-uploader>
+    </div>
+
+  </div>
+
 </template>
 
 <script>
@@ -50,6 +56,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../css/quasar.variables";
+
+  .selectionHeader:hover {
+    cursor: pointer;
+  }
+
+  .uploader {
+    width: 100%;
+    max-width: 100% !important;
+
+    .q-uploader__header > div {
+      display: flex;
+      flex-direction: column;
+      @media screen and (min-width: $width-sm){
+        flex-direction: row;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  }
 
 </style>

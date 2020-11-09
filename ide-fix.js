@@ -87,3 +87,6 @@ Vue.component('q-checkbox', {
 Vue.component('router-link', {
   props: {}
 });
+Vue.component('q-space', {
+  props: {}
+});

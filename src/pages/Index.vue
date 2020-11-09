@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page padding>
-    <p>Welcome to our app! You can upload your images below</p>
+  <q-page class="q-px-lg q-py-none">
+    <h1>Welcome</h1>
 
     <SelectImages />
 
@@ -31,6 +31,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../css/fonts.scss";
 
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    font-family: $montserrat-bold;
+  }
 </style>

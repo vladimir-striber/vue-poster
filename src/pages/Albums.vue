@@ -1,6 +1,6 @@
 <template>
-  <q-page padding>
-    <p>Albums</p>
+  <q-page class="q-px-lg q-py-none">
+    <h1>Albums</h1>
 
     <CreateAlbum />
 
@@ -38,6 +38,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../css/fonts.scss";
+
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    font-family: $montserrat-bold;
+  }
 
 </style>
