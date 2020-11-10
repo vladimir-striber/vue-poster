@@ -126,6 +126,7 @@ export default {
       this.dialog = true
       this.imageSrc = imageSrc
     },
+    // Resetting dialog input fields
     clearPosterDialog () {
       this.dialog = false
       this.title = ''

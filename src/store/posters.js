@@ -10,6 +10,12 @@ const mutations = {
     this.state.posters.posters.push(payload)
     console.log(this.state.posters, 'posters from mutation state')
   },
+  updatePoster (state, payload) {
+    this.state.posters.posters[payload.editIndex].title = payload.title
+    this.state.posters.posters[payload.editIndex].caption = payload.caption
+    this.state.posters.posters[payload.editIndex].posterBackground = payload.posterBackground
+    console.log(this.state.posters, 'edit poster from mutation state')
+  },
   // clearPosterSelections () {
   //   this.state.posters.posters.forEach((poster) => {
   //     poster.selected = false
@@ -26,6 +32,9 @@ const actions = {
   },
   uploadPoster ({ commit }, payload) {
     commit('uploadPoster', payload)
+  },
+  updatePoster ({ commit }, payload) {
+    commit('updatePoster', payload)
   },
   // clearPosterSelections ({ commit }) {
   //   commit('clearPosterSelections')

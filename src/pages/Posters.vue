@@ -8,23 +8,63 @@
 
         <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
 
-        <!--<div class="poster__overlay">-->
-          <!--<div class="poster__actions">-->
-            <!--<q-btn-->
-                <!--round-->
-                <!--color="primary"-->
-                <!--icon="close"-->
-                <!--size="8px"-->
-                <!--class="absolute-top-right q-ma-xs image__delete"-->
-                <!--@click="deletePoster(index)"-->
-            <!--/>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="poster__overlay">
+          <div class="poster__actions">
+            <q-btn
+                round
+                size="sm"
+                color="primary"
+                icon="edit"
+                class="albumCard__btn q-ma-sm"
+                @click="openEditDialog(index)"
+            ></q-btn>
+            <q-btn
+                round
+                color="primary"
+                icon="close"
+                size="sm"
+                class="absolute-top-right q-ma-sm image__delete"
+                @click="deletePoster(index)"
+            />
+          </div>
+        </div>
 
         <div class="posterDescription">
           <div class="text-h6 text-grey-1"><span>{{poster.title}}</span></div>
           <div class="text-grey-1"><span>{{poster.caption}}</span></div>
         </div>
+
+        <!--Dialog for poster edit-->
+        <q-dialog v-model="dialog" class="posterDialog">
+          <q-card class="my-card posterDialog__card">
+            <q-img :src="imageSrc"></q-img>
+
+            <q-card-section class="q-pt-none">
+              <q-input v-model="title" label="Title" color="secondary" />
+              <q-input v-model="caption" label="Caption" class="q-mb-md" color="secondary" />
+              <p class="text-grey-8 text-subtitle1 q-mb-xs">Background</p>
+              <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
+            </q-card-section>
+
+            <q-card-actions align="right" class="row q-pa-md">
+              <q-btn
+                  flat
+                  color="primary"
+                  label="Cancel"
+                  class="text-grey-8 col-grow"
+                  v-close-popup
+                  no-caps
+              ></q-btn>
+              <q-btn
+                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
+                  class="col-8"
+                  color="primary"
+                  label="Save"
+                  no-caps
+              ></q-btn>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
 
       </div>
     </div>
@@ -40,13 +80,84 @@ export default {
   name: 'Posters',
   data () {
     return {
+      dialog: false,
+      editIndex: '',
+      title: '',
+      caption: '',
+      imageSrc: '',
+      posterBackground: false,
+      colors: [
+        {
+          name: 'grey-10',
+          code: '#212121',
+          state: true
+        },
+        {
+          name: 'blue-grey-10',
+          code: '#263238',
+          state: false
+        },
+        {
+          name: 'teal-10 ',
+          code: '#004d40',
+          state: false
+        },
+        {
+          name: 'cyan-10',
+          code: '#006064',
+          state: false
+        },
+        {
+          name: 'deep-orange-10',
+          code: '#bf360c',
+          state: false
+        },
+        {
+          name: 'amber-10',
+          code: '#ff6f00',
+          state: false
+        }
+      ]
     }
   },
   computed: {
     ...mapGetters('posters', ['posters'])
   },
   methods: {
-    ...mapActions('posters', ['deletePoster']),
+    ...mapActions('posters', ['deletePoster', 'updatePoster']),
+    openEditDialog (index) {
+      this.editIndex = index
+      this.imageSrc = this.posters[index].image
+      this.dialogStateMutate()
+    },
+    dialogStateMutate () {
+      setTimeout(() => {
+        this.dialog = true
+      })
+    },
+    // Toggle checkbox' state
+    selectColor (colorIndex) {
+      this.posterBackground = this.colors[colorIndex].name
+      for (let i = 0; i < this.colors.length; i++) {
+        if (i === colorIndex) {
+          if (this.colors[i].state === true) {
+            this.colors[i].state = true
+          }
+        } else {
+          this.colors[i].state = false
+        }
+      }
+    },
+    // Resetting dialog input fields
+    clearPosterDialog () {
+      this.dialog = false
+      this.title = ''
+      this.caption = ''
+      this.imageSrc = ''
+      this.colors.forEach(color => {
+        color.state = false
+      })
+    },
     background (bgc) {
       if (bgc) {
         return `bg-${bgc}`
@@ -83,6 +194,7 @@ export default {
       columns: 4;
     }
     .box {
+      position: relative;
       width: 100%;
       margin: 0 0 8px;
       padding: 4px;
@@ -92,6 +204,15 @@ export default {
       &:hover {
         transform: scale(1.03);
         cursor: pointer;
+        .poster__overlay {
+          display: block;
+          background-color: rgba(0,0,0,0.6);
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
       }
       img {
         max-width: 100%;
@@ -103,38 +224,19 @@ export default {
     display: none;
   }
 
-  .posterWrapper {
-    position: relative;
-    background-color: darkslategrey;
-    transition: ease-in-out 200ms;
-    /*max-height: 300px;*/
-    margin-bottom: 12px;
-    display: flex;
-    flex-direction: column;
-    &:hover {
-      .poster__overlay {
-      display: block;
-      background-color: rgba(0,0,0,0.7);
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-
-      }
-    }
-  }
   .posterDescription {
     position: relative;
     padding: 4px;
-    /*bottom: 0;*/
-    /*left: 0;*/
   }
 
   .image {
     width: 100%;
     height: auto;
-    /*max-height: 100%;*/
+  }
+
+  .posterDialog__card {
+    width: 300px;
+    min-width: 300px;
   }
 
 </style>

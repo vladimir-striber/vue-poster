@@ -10,7 +10,7 @@
           color="secondary"
           flat
           bordered
-          class="q-mb-md col col-md-6 uploader bg-grey-2"
+          class="q-mb-md col col-md-6 uploader bg-grey-1"
 
       >
         <template v-slot:header="scope">

@@ -26,7 +26,7 @@
         </div>
       </q-card-section>
 
-      <!--Dialog for album create-->
+      <!--Dialog for album edit-->
       <q-dialog v-model="dialog" persistent class="posterDialog">
 
         <q-card v-if="editIndex === 0 || editIndex > 0" class="my-card posterDialog__card">
