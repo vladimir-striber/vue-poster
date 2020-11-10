@@ -6,7 +6,7 @@
 
       <div v-for="(poster, index) in posters" :key="index" class="box" :class="background(poster.posterBackground)">
 
-        <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
+        <q-img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
 
         <div class="poster__overlay">
           <div class="poster__actions">
@@ -24,7 +24,7 @@
                 icon="close"
                 size="sm"
                 class="absolute-top-right q-ma-sm image__delete"
-                @click="deletePoster(index)"
+                @click="openDeleteConfirmDialog(index)"
             />
           </div>
         </div>
@@ -35,7 +35,7 @@
         </div>
 
         <!--Dialog for poster edit-->
-        <q-dialog v-model="dialog" class="posterDialog">
+        <q-dialog v-model="dialog" persistent class="posterDialog">
           <q-card class="my-card posterDialog__card">
             <q-img :src="imageSrc"></q-img>
 
@@ -66,6 +66,34 @@
           </q-card>
         </q-dialog>
 
+        <!--Dialog for delete album confirmation-->
+        <q-dialog v-model="confirm">
+          <q-card>
+            <q-card-section class="row items-center">
+              <span>Are you sure you want to delete this poster?</span>
+            </q-card-section>
+
+            <q-card-actions align="right" class="row q-pa-md">
+              <q-btn
+                  flat
+                  label="Cancel"
+                  color="primary"
+                  v-close-popup
+                  no-caps
+                  class="text-grey-8 col-grow"
+              />
+              <q-btn
+                  label="Delete"
+                  color="warning"
+                  v-close-popup
+                  no-caps
+                  class="col-8"
+                  @click="deletePoster(deletePosterIndex); confirm = false"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
       </div>
     </div>
 
@@ -86,6 +114,8 @@ export default {
       caption: '',
       imageSrc: '',
       posterBackground: false,
+      confirm: false,
+      deletePosterIndex: '',
       colors: [
         {
           name: 'grey-10',
@@ -135,6 +165,10 @@ export default {
         this.dialog = true
       })
     },
+    openDeleteConfirmDialog (index) {
+      this.confirm = true
+      this.deletePosterIndex = index
+    },
     // Toggle checkbox' state
     selectColor (colorIndex) {
       this.posterBackground = this.colors[colorIndex].name
@@ -151,12 +185,19 @@ export default {
     // Resetting dialog input fields
     clearPosterDialog () {
       this.dialog = false
-      this.title = ''
-      this.caption = ''
-      this.imageSrc = ''
-      this.colors.forEach(color => {
-        color.state = false
-      })
+      // this.title = ''
+      // this.caption = ''
+      // this.imageSrc = ''
+      // this.colors.forEach(color => {
+      //   color.state = false
+      // })
+      // for (let i = 0; i < this.colors.length; i++) {
+      //   if (i === 0) {
+      //     this.colors[i].state = true
+      //   } else {
+      //     this.colors[i].state = false
+      //   }
+      // }
     },
     background (bgc) {
       if (bgc) {
@@ -235,8 +276,9 @@ export default {
   }
 
   .posterDialog__card {
-    width: 300px;
+    width: 100%;
     min-width: 300px;
+    max-width: 500px;
   }
 
 </style>

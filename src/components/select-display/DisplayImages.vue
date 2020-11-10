@@ -25,13 +25,13 @@
               icon="close"
               size="xs"
               dense
-              @click="deleteImage(index)"
+              @click="openDeleteConfirmDialog(index)"
               class="q-ma-none"
           />
         </div>
 
         <!--Dialog for poster create-->
-        <q-dialog v-model="dialog" class="posterDialog">
+        <q-dialog v-model="dialog" persistent class="posterDialog">
           <q-card class="my-card posterDialog__card">
             <q-img :src="imageSrc"></q-img>
 
@@ -62,6 +62,34 @@
           </q-card>
         </q-dialog>
 
+        <!--Dialog for delete album confirmation-->
+        <q-dialog v-model="confirm">
+          <q-card>
+            <q-card-section class="row items-center">
+              <span>Are you sure you want to delete this image?</span>
+            </q-card-section>
+
+            <q-card-actions align="right" class="row q-pa-md">
+              <q-btn
+                  flat
+                  label="Cancel"
+                  color="primary"
+                  v-close-popup
+                  no-caps
+                  class="text-grey-8 col-grow"
+              />
+              <q-btn
+                  label="Delete"
+                  color="warning"
+                  v-close-popup
+                  no-caps
+                  class="col-8"
+                  @click="deleteImage(deleteImageIndex); confirm = false"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
       </q-item>
 
     </q-list>
@@ -81,6 +109,8 @@ export default {
       caption: '',
       imageSrc: '',
       posterBackground: false,
+      confirm: false,
+      deleteImageIndex: '',
       colors: [
         {
           name: 'grey-10',
@@ -132,9 +162,13 @@ export default {
       this.title = ''
       this.caption = ''
       this.imageSrc = ''
-      this.colors.forEach(color => {
-        color.state = false
-      })
+      for (let i = 0; i < this.colors.length; i++) {
+        if (i === 0) {
+          this.colors[i].state = true
+        } else {
+          this.colors[i].state = false
+        }
+      }
     },
     // Toggle checkbox' state
     selectColor (colorIndex) {
@@ -148,6 +182,10 @@ export default {
           this.colors[i].state = false
         }
       }
+    },
+    openDeleteConfirmDialog (index) {
+      this.confirm = true
+      this.deleteImageIndex = index
     }
   }
 }
@@ -156,8 +194,9 @@ export default {
 <style lang="scss" scoped>
 
   .posterDialog__card {
-    width: 300px;
+    width: 100%;
     min-width: 300px;
+    max-width: 500px;
   }
 
 </style>

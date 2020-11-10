@@ -1,24 +1,33 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 <q-page class="q-px-lg q-py-none">
   <h1>Images</h1>
+
   <div class="container">
+
     <div v-for="(image, index) in images" :key="index" class="box">
 
-        <q-img :src="image.__img.src" @click.stop="openFullScreenImgDialog(image.__img.src)"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+        <q-img :src="image.__img.src" alt="image" width="100%" height="100%" class="image q-ma-none"/>
+
         <div class="image__overlay">
           <div class="image__actions">
+
             <q-btn
                 round
                 color="primary"
-                icon="add"
-                size="8px"
-                class="absolute-top-left q-ma-xs image__makePoster"
-                @click="testFile(image, index)"
-            >
-              <q-tooltip>Make a poster</q-tooltip>
-            </q-btn>
+                icon="remove_red_eye"
+                size="xl"
+                class="absolute-center"
+                @click.stop="openFullScreenImgDialog(image.__img.src)"
+            />
 
-            <q-btn round color="primary" icon="close" size="8px" class="absolute-top-right q-ma-xs image__delete" @click="deleteImage(index)" />
+            <q-btn
+                round
+                color="primary"
+                icon="close"
+                size="sm"
+                class="absolute-top-right q-ma-sm"
+                @click="openDeleteConfirmDialog(index)"
+            />
           </div>
         </div>
 
@@ -37,6 +46,34 @@
         </q-card>
       </q-dialog>
 
+      <!--Dialog for delete album confirmation-->
+      <q-dialog v-model="confirm">
+        <q-card>
+          <q-card-section class="row items-center">
+            <span>Are you sure you want to delete this image?</span>
+          </q-card-section>
+
+          <q-card-actions align="right" class="row q-pa-md">
+            <q-btn
+                flat
+                label="Cancel"
+                color="primary"
+                v-close-popup
+                no-caps
+                class="text-grey-8 col-grow"
+            />
+            <q-btn
+                label="Delete"
+                color="primary"
+                v-close-popup
+                no-caps
+                class="col-8"
+                @click="deleteImage(deleteImageIndex); confirm = false"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
     </div>
   </div>
 
@@ -45,23 +82,30 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Images',
   data () {
     return {
       dialog: false,
       maximizedToggle: true,
-      imageSrc: ''
+      imageSrc: '',
+      confirm: false,
+      deleteImageIndex: ''
     }
   },
   computed: {
     ...mapGetters('images', ['images'])
   },
   methods: {
+    ...mapActions('images', ['deleteImage']),
     openFullScreenImgDialog (imageSrc) {
       this.dialog = true
       this.imageSrc = imageSrc
+    },
+    openDeleteConfirmDialog (index) {
+      this.confirm = true
+      this.deleteImageIndex = index
     }
   }
 }
@@ -98,11 +142,19 @@ export default {
       background-color: $light-e;
       overflow: hidden;
       break-inside: avoid;
-      transition: 0.2s;
       &:hover {
         background-color: #ddd;
         transform: scale(1.03);
         cursor: pointer;
+        .image__overlay {
+          display: block;
+          background-color: rgba(0,0,0,0.7);
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
       }
       img {
         max-width: 100%;
@@ -115,23 +167,8 @@ export default {
   }
 
   .image__overlay {
+    transition: 1s;
     display: none;
-  }
-
-  .image__wrapper {
-    position: relative;
-    transition: ease-in-out 2s;
-    &:hover {
-      .image__overlay {
-        display: block;
-        background-color: rgba(0,0,0,0.7);
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
-    }
   }
 
 </style>

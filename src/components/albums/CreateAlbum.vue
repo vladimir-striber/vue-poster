@@ -8,12 +8,13 @@
         icon="add"
         @click="openCreateAlbumDialog()"
         no-caps
-        class="q-mb-md"
+        class="q-mb-lg"
+        size="md"
     >
       Create new album
     </q-btn>
 
-    <p v-if="noPostersMessage" class="text-grey-10">No posters yet... You can create one on the Home page...</p>
+    <p v-if="posters.length === 0" class="text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No posters yet... You can create one on the Home page...</p>
 
     <!--Dialog for album create-->
     <q-dialog v-model="dialog" class="albumDialog">
@@ -64,8 +65,7 @@ export default {
   data () {
     return {
       dialog: false,
-      title: '',
-      noPostersMessage: false
+      title: ''
     }
   },
   computed: {
@@ -78,18 +78,8 @@ export default {
       this.dialog = false
       this.title = ''
     },
-    clearPosterSelections () {
-      this.posters.forEach(poster => {
-        poster.selected = false
-      })
-    },
     openCreateAlbumDialog () {
-      if (this.posters.length === 0) {
-        this.noPostersMessage = true
-      } else {
-        this.dialog = true
-        this.noPostersMessage = false
-      }
+      this.dialog = true
     }
   }
 }
@@ -98,8 +88,9 @@ export default {
 <style lang="scss" scoped>
 
   .albumDialog__card {
-    width: 300px;
+    width: 100%;
     min-width: 300px;
+    max-width: 500px;
   }
 
 </style>

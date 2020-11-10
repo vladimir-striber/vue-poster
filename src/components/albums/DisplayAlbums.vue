@@ -6,14 +6,38 @@
         <span class="text-h6 q-mb-xs">{{ album.title }}</span>
         <q-card-actions align="right" class="q-pa-none">
 
-          <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="$light-fa"
-                 icon="remove_red_eye" class="albumCard__btn q-ml-xs"></q-btn>
+          <q-btn
+              :to="{name: 'album', params: { albumIndex: index }}"
+              flat
+              round
+              size="sm"
+              color="$light-fa"
+              icon="remove_red_eye"
+              class="albumCard__btn q-ml-xs"
+          >
+          </q-btn>
 
-          <q-btn @click="openEditDialog(index)" flat round size="sm" color="$light-fa" icon="edit"
-                 class="albumCard__btn"></q-btn>
+          <q-btn
+              @click="openEditDialog(index)"
+              flat
+              round
+              size="sm"
+              color="$light-fa"
+              icon="edit"
+              class="albumCard__btn"
+          >
+          </q-btn>
 
-          <q-btn flat round size="sm" color="$light-fa" icon="close"
-                 class="albumCard__btn albumCard__btn--delete"></q-btn>
+          <q-btn
+              @click="openDeleteConfirmDialog(index)"
+              flat
+              round
+              size="sm"
+              color="$light-fa"
+              icon="close"
+              class="albumCard__btn albumCard__btn--delete"
+          >
+          </q-btn>
 
         </q-card-actions>
       </q-card-section>
@@ -27,7 +51,7 @@
       </q-card-section>
 
       <!--Dialog for album edit-->
-      <q-dialog v-model="dialog" persistent class="posterDialog">
+      <q-dialog v-model="dialog" class="posterDialog">
 
         <q-card v-if="editIndex === 0 || editIndex > 0" class="my-card posterDialog__card">
 
@@ -46,26 +70,53 @@
 
           </q-list>
 
-          <q-card-actions align="right">
+          <q-card-actions align="right" class="row q-pa-md">
             <q-btn
-                style="width: 150px"
                 flat
                 color="primary"
                 label="Cancel"
                 no-caps
                 v-close-popup
+                class="text-grey-8 col-grow"
             ></q-btn>
             <q-btn
                 @click="updateAlbum({index: editIndex, posters: posters, title: albums[editIndex].title}); clearPosterSelections()"
-                style="width: 150px"
-                flat
-                color="secondary"
+                class="col-8"
+                color="primary"
                 label="Save"
                 no-caps
                 v-close-popup
             ></q-btn>
           </q-card-actions>
 
+        </q-card>
+      </q-dialog>
+
+      <!--Dialog for delete album confirmation-->
+      <q-dialog v-model="confirm">
+        <q-card>
+          <q-card-section class="row items-center">
+            <span>Are you sure you want to delete this album?</span>
+          </q-card-section>
+
+          <q-card-actions align="right" class="row q-pa-md">
+            <q-btn
+                flat
+                label="Cancel"
+                color="primary"
+                v-close-popup
+                no-caps
+                class="text-grey-8 col-grow"
+            />
+            <q-btn
+                label="Delete"
+                color="warning"
+                v-close-popup
+                no-caps
+                class="col-8"
+                @click="deleteAlbum(deleteAlbumIndex); confirm = false"
+            />
+          </q-card-actions>
         </q-card>
       </q-dialog>
 
@@ -83,7 +134,9 @@ export default {
     return {
       dialog: false,
       editIndex: '',
-      titleEdited: ''
+      titleEdited: '',
+      confirm: false,
+      deleteAlbumIndex: ''
     }
   },
   computed: {
@@ -101,6 +154,10 @@ export default {
       setTimeout(() => {
         this.dialog = true
       })
+    },
+    openDeleteConfirmDialog (index) {
+      this.confirm = true
+      this.deleteAlbumIndex = index
     }
     // clearAlbumDialog () {
     //   this.dialog = false
@@ -157,6 +214,12 @@ export default {
     width: 100%;
     height: 100px;
     max-height: 100px;
+  }
+
+  .posterDialog__card {
+    width: 100%;
+    min-width: 300px;
+    max-width: 500px;
   }
 
 </style>

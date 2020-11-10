@@ -46,7 +46,6 @@ const actions = {
   },
   deleteAlbum ({ commit }, payload) {
     commit('deleteAlbum', payload)
-    // console.log(payload, 'payload from actions')
   }
 }
 
