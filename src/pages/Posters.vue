@@ -4,11 +4,9 @@
 
     <div class="container">
 
-      <div v-for="(poster, index) in posters" :key="index" class="box">
+      <div v-for="(poster, index) in posters" :key="index" class="box" :class="background(poster.posterBackground)">
 
         <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
-        <!--:style="`poster.posterBackground ? background-color: poster.posterBackground : background-color: #eee`"-->
-        <!--:style="poster.posterBackground ? 'background-color: poster.posterBackground' : 'background-color: #eee'"-->
 
         <div class="poster__overlay">
           <div class="poster__actions">
@@ -23,8 +21,8 @@
           </div>
         </div>
         <div class="posterDescription">
-          <div class="text-h6"><span>{{poster.title}}</span></div>
-          <div><span>{{poster.caption}}</span></div>
+          <div class="text-h6 text-grey-1"><span>{{poster.title}}</span></div>
+          <div class="text-grey-1"><span>{{poster.caption}}</span></div>
         </div>
 
       </div>
@@ -41,14 +39,20 @@ export default {
   name: 'Posters',
   data () {
     return {
-
     }
   },
   computed: {
     ...mapGetters('posters', ['posters'])
   },
   methods: {
-    ...mapActions('posters', ['deletePoster'])
+    ...mapActions('posters', ['deletePoster']),
+    background (bgc) {
+      if (bgc) {
+        return `bg-${bgc}`
+      } else {
+        return 'bg-grey-10'
+      }
+    }
   }
 }
 </script>
@@ -61,6 +65,10 @@ export default {
     font-size: 32px;
     font-weight: 400;
     font-family: $montserrat-bold;
+  }
+
+  .testCard {
+    width: 200px;
   }
 
   .container {

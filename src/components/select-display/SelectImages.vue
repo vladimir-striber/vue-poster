@@ -10,12 +10,12 @@
           color="teal"
           flat
           bordered
-          style="max-width: 300px;"
           class="q-mb-md col col-md-6 uploader"
+
       >
         <template v-slot:header="scope">
           <div class="row no-wrap items-center q-pa-xs justify-between selectionHeader">
-            <q-btn v-if="scope.canAddFiles" flat no-caps>
+            <q-btn all-pointer-events v-if="scope.canAddFiles" flat no-caps>
               <q-uploader-add-trigger />
               <q-icon name="add_box" class="q-mr-xs"></q-icon>
               <span>Select</span>

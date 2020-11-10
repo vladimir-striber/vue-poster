@@ -6,7 +6,7 @@
         <q-item-section thumbnail class="q-pl-sm">
           <img :src="image.__img.src" alt="image">
         </q-item-section>
-        <q-item-section>{{ image.name }} / {{ image.__sizeLabel }}</q-item-section>
+        <q-item-section class="gt-xs">{{ image.name }} / {{ image.__sizeLabel }}</q-item-section>
         <div class="q-pa-md q-ma-none q-gutter-sm absolute-right row items-center">
           <q-btn
               color="secondary"
@@ -32,16 +32,23 @@
             <q-img :src="imageSrc"></q-img>
 
             <q-card-section class="q-pt-none">
-              <q-input v-model="title" label="Title" />
-              <q-input v-model="caption" label="Caption" class="q-mb-sm" />
+              <q-input v-model="title" label="Title" color="secondary" />
+              <q-input v-model="caption" label="Caption" class="q-mb-md" color="secondary" />
+              <p class="text-grey-8 text-subtitle1 q-mb-xs">Background</p>
               <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
             </q-card-section>
 
-            <q-card-actions align="right">
+            <q-card-actions align="right" class="row q-pa-md">
+              <q-btn
+                  flat
+                  color="primary"
+                  label="Cancel"
+                  class="text-grey-8 col-grow"
+                  no-caps
+              ></q-btn>
               <q-btn
                   @click="uploadPoster({image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
-                  style="width: 170px"
-                  flat
+                  class="col-8"
                   color="secondary"
                   label="Create new poster"
                   no-caps
@@ -71,33 +78,33 @@ export default {
       posterBackground: false,
       colors: [
         {
+          name: 'grey-10',
+          code: '#212121',
+          state: false
+        },
+        {
           name: 'blue-grey-10',
           code: '#263238',
           state: false
         },
         {
-          name: 'deep-purple-7',
-          code: '#5e35b1',
+          name: 'teal-10 ',
+          code: '#004d40',
           state: false
         },
         {
-          name: 'cyan-9',
-          code: '#00838f',
+          name: 'cyan-10',
+          code: '#006064',
           state: false
         },
         {
-          name: 'deep-orange-9',
-          code: '#d84315',
+          name: 'deep-orange-10',
+          code: '#bf360c',
           state: false
         },
         {
-          name: 'teal-9',
-          code: '#00695c',
-          state: false
-        },
-        {
-          name: 'amber-9',
-          code: '#ff8f00',
+          name: 'amber-10',
+          code: '#ff6f00',
           state: false
         }
       ]
@@ -119,12 +126,21 @@ export default {
       this.title = ''
       this.caption = ''
       this.imageSrc = ''
+      this.colors.forEach(color => {
+        color.state = false
+      })
     },
+    // Toggle checkbox' state
     selectColor (colorIndex) {
-      this.posterBackground = this.colors[colorIndex].code
-      // this.colors[colorIndex].state = true
+      this.posterBackground = this.colors[colorIndex].name
       for (let i = 0; i < this.colors.length; i++) {
-        i === colorIndex ? this.colors[i].state = true : this.colors[i].state = false
+        if (i === colorIndex) {
+          if (this.colors[i].state === true) {
+            this.colors[i].state = true
+          }
+        } else {
+          this.colors[i].state = false
+        }
       }
     }
   }
