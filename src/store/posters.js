@@ -5,19 +5,17 @@ const state = {
 const mutations = {
   selectPoster (state, payload) {
     this.state.posters.posters[payload].selected = !this.state.posters.posters[payload].selected
-    console.log(this.state.posters, payload, 'payload from mutation')
   },
   uploadPoster (state, payload) {
     this.state.posters.posters.push(payload)
     console.log(this.state.posters, 'posters from mutation state')
   },
-  clearPosterSelections () {
-    this.state.posters.posters.forEach((poster) => {
-      poster.selected = false
-    })
-  },
+  // clearPosterSelections () {
+  //   this.state.posters.posters.forEach((poster) => {
+  //     poster.selected = false
+  //   })
+  // },
   deletePoster (state, payload) {
-    // console.log(payload, this.state.posters, 'posters delete from mutation state')
     this.state.posters.posters.splice(payload, 1)
   }
 }
@@ -25,18 +23,15 @@ const mutations = {
 const actions = {
   selectPoster ({ commit }, payload) {
     commit('selectPoster', payload)
-    // console.log(payload, 'payload from actions')
   },
   uploadPoster ({ commit }, payload) {
-    // console.log(payload, 'poster from actions')
     commit('uploadPoster', payload)
   },
-  clearPosterSelections ({ commit }) {
-    commit('clearPosterSelections')
-  },
+  // clearPosterSelections ({ commit }) {
+  //   commit('clearPosterSelections')
+  // },
   deletePoster ({ commit }, payload) {
     commit('deletePoster', payload)
-    // console.log(payload, 'payload from actions')
   }
 }
 
@@ -44,7 +39,6 @@ const getters = {
   posters: (state) => {
     return state.posters
   }
-
 }
 
 export default {

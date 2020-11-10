@@ -8,18 +8,19 @@
 
         <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none" />
 
-        <div class="poster__overlay">
-          <div class="poster__actions">
-            <q-btn
-                round
-                color="primary"
-                icon="close"
-                size="8px"
-                class="absolute-top-right q-ma-xs image__delete"
-                @click="deletePoster(index)"
-            />
-          </div>
-        </div>
+        <!--<div class="poster__overlay">-->
+          <!--<div class="poster__actions">-->
+            <!--<q-btn-->
+                <!--round-->
+                <!--color="primary"-->
+                <!--icon="close"-->
+                <!--size="8px"-->
+                <!--class="absolute-top-right q-ma-xs image__delete"-->
+                <!--@click="deletePoster(index)"-->
+            <!--/>-->
+          <!--</div>-->
+        <!--</div>-->
+
         <div class="posterDescription">
           <div class="text-h6 text-grey-1"><span>{{poster.title}}</span></div>
           <div class="text-grey-1"><span>{{poster.caption}}</span></div>
@@ -65,10 +66,6 @@ export default {
     font-size: 32px;
     font-weight: 400;
     font-family: $montserrat-bold;
-  }
-
-  .testCard {
-    width: 200px;
   }
 
   .container {

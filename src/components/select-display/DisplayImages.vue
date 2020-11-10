@@ -44,6 +44,7 @@
                   color="primary"
                   label="Cancel"
                   class="text-grey-8 col-grow"
+                  v-close-popup
                   no-caps
               ></q-btn>
               <q-btn
@@ -80,7 +81,7 @@ export default {
         {
           name: 'grey-10',
           code: '#212121',
-          state: false
+          state: true
         },
         {
           name: 'blue-grey-10',

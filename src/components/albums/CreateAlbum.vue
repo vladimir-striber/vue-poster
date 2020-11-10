@@ -7,7 +7,7 @@
     <q-dialog v-model="dialog" class="posterDialog">
       <q-card class="my-card posterDialog__card">
 
-        <q-input v-model="title" label="Title" />
+        <q-input v-model="title" label="Title" class="q-pa-sm" color="secondary" />
         <q-list bordered v-if="posters.length > 0">
           <q-item v-for="(poster, index) in posters" :key="index" clickable v-ripple>
 
@@ -16,17 +16,24 @@
             </q-item-section>
             <q-item-section>{{ poster.title }} / {{ poster.caption }}</q-item-section>
 
-            <q-checkbox :value="poster.selected" @input="selectPoster(index)" />
+            <q-checkbox :value="poster.selected" @input="selectPoster(index)" color="secondary" />
 
           </q-item>
 
         </q-list>
 
-        <q-card-actions align="right">
+        <q-card-actions align="right" class="row q-pa-md">
+          <q-btn
+              flat
+              color="primary"
+              label="Cancel"
+              class="text-grey-8 col-grow"
+              v-close-popup
+              no-caps
+          ></q-btn>
           <q-btn
               @click="uploadAlbum({posters: posters, title: title}); clearAlbumDialog(); clearPosterSelections();"
-              style="width: 150px"
-              flat
+              class="col-8"
               color="secondary"
               label="Create new album"
               no-caps
@@ -57,6 +64,11 @@ export default {
     clearAlbumDialog () {
       this.dialog = false
       this.title = ''
+    },
+    clearPosterSelections () {
+      this.posters.forEach(poster => {
+        poster.selected = false
+      })
     }
   }
 }
