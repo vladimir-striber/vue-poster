@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="q-pb-xl">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf" class="q-pb-xl bg-grey-2 mainLayout">
+    <q-header elevated class="mainToolbar bg-grey-2 text-grey-8 no-shadow">
       <q-toolbar>
         <q-btn
           flat
@@ -11,8 +11,8 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
-          Motivation posters
+        <q-toolbar-title class="title">
+          <span class="title__motivation text-lowercase text-bold">Motivation</span><span class="title__posters text-lowercase text-thin text-grey-6">posters</span>
         </q-toolbar-title>
 
       </q-toolbar>
@@ -22,7 +22,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-grey-2"
     >
       <q-list>
         <q-item-label
@@ -88,3 +88,8 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  @import "../css/quasar.variables";
+
+</style>

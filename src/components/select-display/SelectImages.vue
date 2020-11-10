@@ -1,16 +1,16 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div class="row">
-    <div class="col col-md-6">
+  <div class="row justify-center q-my-lg">
+    <div class="col col-md-6 ">
       <q-uploader
           @added="fileAdded"
           url="http://localhost:8080"
           accept=".jpg, .pdf, image/*, .png"
           multiple
           batch
-          color="teal"
+          color="secondary"
           flat
           bordered
-          class="q-mb-md col col-md-6 uploader"
+          class="q-mb-md col col-md-6 uploader bg-grey-2"
 
       >
         <template v-slot:header="scope">
@@ -20,7 +20,7 @@
               <q-icon name="add_box" class="q-mr-xs"></q-icon>
               <span>Select</span>
             </q-btn>
-            <q-btn v-if="scope.canUpload" @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()" flat no-caps>
+            <q-btn v-if="scope.canUpload" @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()" no-caps color="primary">
               <q-icon name="check" class="q-mr-xs"></q-icon>
               <span>Save</span>
             </q-btn>
@@ -75,6 +75,7 @@ export default {
       }
       button {
         width: 100%;
+        height: 48px;
       }
     }
   }

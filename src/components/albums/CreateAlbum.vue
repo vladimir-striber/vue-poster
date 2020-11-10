@@ -1,11 +1,23 @@
 <template>
   <div class="q-mb-xl">
-    <p>Create new album</p>
-    <q-btn outline round color="secondary" icon="add" @click="dialog = true"></q-btn>
+
+    <q-btn
+        outline
+        rounded
+        color="secondary"
+        icon="add"
+        @click="openCreateAlbumDialog()"
+        no-caps
+        class="q-mb-md"
+    >
+      Create new album
+    </q-btn>
+
+    <p v-if="noPostersMessage" class="text-grey-10">No posters yet... You can create one on the Home page...</p>
 
     <!--Dialog for album create-->
-    <q-dialog v-model="dialog" class="posterDialog">
-      <q-card class="my-card posterDialog__card">
+    <q-dialog v-model="dialog" class="albumDialog">
+      <q-card class="my-card albumDialog__card">
 
         <q-input v-model="title" label="Title" class="q-pa-sm" color="secondary" />
         <q-list bordered v-if="posters.length > 0">
@@ -34,7 +46,7 @@
           <q-btn
               @click="uploadAlbum({posters: posters, title: title}); clearAlbumDialog(); clearPosterSelections();"
               class="col-8"
-              color="secondary"
+              color="primary"
               label="Create new album"
               no-caps
           ></q-btn>
@@ -52,7 +64,8 @@ export default {
   data () {
     return {
       dialog: false,
-      title: ''
+      title: '',
+      noPostersMessage: false
     }
   },
   computed: {
@@ -69,11 +82,24 @@ export default {
       this.posters.forEach(poster => {
         poster.selected = false
       })
+    },
+    openCreateAlbumDialog () {
+      if (this.posters.length === 0) {
+        this.noPostersMessage = true
+      } else {
+        this.dialog = true
+        this.noPostersMessage = false
+      }
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+  .albumDialog__card {
+    width: 300px;
+    min-width: 300px;
+  }
 
 </style>

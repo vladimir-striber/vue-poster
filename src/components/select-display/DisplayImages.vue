@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list bordered v-if="images.length > 0">
-      <q-item v-for="(image, index) in images" :key="index" clickable v-ripple>
+      <q-item v-for="(image, index) in images" :key="index">
 
         <q-item-section thumbnail class="q-pl-sm">
           <img :src="image.__img.src" alt="image">
@@ -9,10 +9,13 @@
         <q-item-section class="gt-xs">{{ image.name }} / {{ image.__sizeLabel }}</q-item-section>
         <div class="q-pa-md q-ma-none q-gutter-sm absolute-right row items-center">
           <q-btn
+              outline
+              rounded
               color="secondary"
-              size="8px"
-              class="q-ma-xs image__makePoster"
+              icon="add"
+              class="q-my-xs q-mx-md"
               @click.stop="openCreatePosterDialog(image.__img.src)"
+              no-caps
           >
             Create a poster
           </q-btn>
@@ -20,7 +23,8 @@
               round
               color="red-6"
               icon="close"
-              size="8px"
+              size="xs"
+              dense
               @click="deleteImage(index)"
               class="q-ma-none"
           />
@@ -50,7 +54,7 @@
               <q-btn
                   @click="uploadPoster({image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
                   class="col-8"
-                  color="secondary"
+                  color="primary"
                   label="Create new poster"
                   no-caps
               ></q-btn>

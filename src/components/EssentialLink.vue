@@ -7,7 +7,6 @@
     <q-item-section
       v-if="icon"
       avatar
-      color="secondary"
     >
       <q-icon :name="icon" />
     </q-item-section>
@@ -47,3 +46,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  @import "../css/quasar.variables";
+
+  .q-item {
+    color: $dark-7;
+  }
+
+  .q-router-link--exact-active {
+    color: $primary;
+  }
+</style>

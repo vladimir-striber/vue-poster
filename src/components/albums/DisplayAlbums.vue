@@ -6,13 +6,13 @@
         <span class="text-h6 q-mb-xs">{{ album.title }}</span>
         <q-card-actions align="right" class="q-pa-none">
 
-          <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="red"
+          <q-btn :to="{name: 'album', params: { albumIndex: index }}" flat round size="sm" color="$light-fa"
                  icon="remove_red_eye" class="albumCard__btn q-ml-xs"></q-btn>
 
-          <q-btn @click="openEditDialog(index)" flat round size="sm" color="teal" icon="edit"
+          <q-btn @click="openEditDialog(index)" flat round size="sm" color="$light-fa" icon="edit"
                  class="albumCard__btn"></q-btn>
 
-          <q-btn flat round size="sm" color="primary" icon="close"
+          <q-btn flat round size="sm" color="$light-fa" icon="close"
                  class="albumCard__btn albumCard__btn--delete"></q-btn>
 
         </q-card-actions>
@@ -127,7 +127,8 @@ export default {
   }
 
   .albumCard__header {
-    background-color: #eee;
+    background-color: $primary;
+    color: $light-fa;
   }
 
   .albumCard__btn {
