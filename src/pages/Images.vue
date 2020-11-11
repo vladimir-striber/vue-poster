@@ -2,6 +2,8 @@
 <q-page class="q-px-lg q-py-none">
   <h1>Images</h1>
 
+  <p v-if="images.length === 0" class="noItemMessage text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No images yet... You can select your images on the Home page...</p>
+
   <div class="container">
 
     <div v-for="(image, index) in images" :key="index" class="box">

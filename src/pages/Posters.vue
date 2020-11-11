@@ -2,6 +2,8 @@
   <q-page class="q-px-lg q-py-none">
     <h1>Posters</h1>
 
+    <p v-if="posters.length === 0" class="noItemMessage text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No posters yet... You can create one on the Home page...</p>
+
     <div class="container">
 
       <div v-for="(poster, index) in posters" :key="index" class="box" :class="background(poster.posterBackground)">
@@ -41,8 +43,8 @@
             <q-img :src="imageSrc"></q-img>
 
             <q-card-section class="q-pt-none">
-              <q-input v-model="posters[editIndex].title" label="Title" color="secondary" />
-              <q-input v-model="posters[editIndex].caption" label="Caption" class="q-mb-md" color="secondary" />
+              <q-input v-model="title" label="Title" color="secondary" />
+              <q-input v-model="caption" label="Caption" class="q-mb-md" color="secondary" />
               <p class="text-grey-8 text-subtitle1 q-mb-xs">Background</p>
               <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
             </q-card-section>
@@ -57,7 +59,7 @@
                   no-caps
               ></q-btn>
               <q-btn
-                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: posters[editIndex].title, caption: posters[editIndex].caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
+                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
                   class="col-8"
                   color="primary"
                   label="Save"
@@ -160,6 +162,8 @@ export default {
       // debugger
       this.editIndex = index
       this.imageSrc = this.posters[index].image
+      this.title = this.posters[index].title
+      this.caption = this.posters[index].caption
       this.dialogStateMutate()
     },
     dialogStateMutate () {

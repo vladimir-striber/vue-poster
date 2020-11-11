@@ -45,8 +45,13 @@
       <q-separator></q-separator>
 
       <q-card-section class="albumCard__content">
-        <div v-for="(poster, index1) in album.posters" :key="index1" class="albumCard__imgWrapper">
+        <div v-for="(poster, index1) in album.posters" :key="index1" class="albumCard__imgWrapper" :class="background(poster.posterBackground)">
           <img :src="poster.image" class="albumCard__img">
+          <div class="posterDescription">
+            <div class="posterDescription__title text-uppercase text-h5 text-center text-grey-1"><span>{{poster.title}}</span></div>
+            <hr class="posterDescription__hr">
+            <div class="posterDescription__caption text-center text-caption text-grey-1"><span>{{poster.caption}}</span></div>
+          </div>
         </div>
       </q-card-section>
 
@@ -157,6 +162,13 @@ export default {
     openDeleteConfirmDialog (index) {
       this.confirm = true
       this.deleteAlbumIndex = index
+    },
+    background (bgc) {
+      if (bgc) {
+        return `bg-${bgc}`
+      } else {
+        return 'bg-grey-10'
+      }
     }
     // clearAlbumDialog () {
     //   this.dialog = false
@@ -174,8 +186,8 @@ export default {
   }
 
   .albumCard {
-    height: 250px;
-    max-height: 250px;
+    height: 350px;
+    max-height: 350px;
     flex-basis: calc(50% - 8px);
     margin-right: 8px;
     margin-bottom: 8px;
@@ -204,8 +216,9 @@ export default {
   }
 
   .albumCard__imgWrapper {
-    margin-right: 8px;
-    margin-top: 8px;
+    width: calc(50% - 8px);
+    margin: 4px;
+    padding: 8px;
   }
 
   .albumCard__img {

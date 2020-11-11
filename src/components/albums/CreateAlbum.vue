@@ -10,11 +10,12 @@
         no-caps
         class="q-mb-lg"
         size="md"
+        v-if="posters.length > 0"
     >
       Create new album
     </q-btn>
 
-    <p v-if="posters.length === 0" class="noItemMessage text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No posters yet... You can create one on the Home page...</p>
+    <p v-else class="noItemMessage text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No albums yet... You can create posters one the Home page and than create your albums...</p>
 
     <!--Dialog for album create-->
     <q-dialog v-model="dialog" class="albumDialog">
