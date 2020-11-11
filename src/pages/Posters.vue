@@ -30,8 +30,9 @@
         </div>
 
         <div class="posterDescription">
-          <div class="text-h6 text-grey-1"><span>{{poster.title}}</span></div>
-          <div class="text-grey-1"><span>{{poster.caption}}</span></div>
+          <div class="posterDescription__title text-uppercase text-h5 text-center text-grey-1"><span>{{poster.title}}</span></div>
+          <hr class="posterDescription__hr">
+          <div class="posterDescription__caption text-center text-caption text-grey-1"><span>{{poster.caption}}</span></div>
         </div>
 
         <!--Dialog for poster edit-->
@@ -212,12 +213,13 @@ export default {
 
 <style lang="scss" scoped>
 
+  @import "../css/quasar.variables";
   @import "../css/fonts.scss";
 
   h1 {
     font-size: 32px;
     font-weight: 400;
-    font-family: $montserrat-bold;
+    /*<!--font-family: $montserrat-bold;-->*/
   }
 
   .container {
@@ -231,17 +233,21 @@ export default {
     @media screen and (min-width: $width-md) {
       columns: 3;
     }
-    @media screen and (min-width: $width-xl) {
-      columns: 4;
-    }
+    /*<!--@media screen and (min-width: $width-xl) {-->*/
+      /*<!--columns: 4;-->*/
+    /*<!--}-->*/
     .box {
       position: relative;
       width: 100%;
       margin: 0 0 8px;
-      padding: 4px;
+      padding: 12px;
       overflow: hidden;
       break-inside: avoid;
-      transition: 0.2s;
+      -webkit-transition: ease-in-out .1s;
+      -moz-transition: ease-in-out .1s;
+      -ms-transition: ease-in-out .1s;
+      -o-transition: ease-in-out .1s;
+      transition: ease-in-out .1s;
       &:hover {
         transform: scale(1.03);
         cursor: pointer;
@@ -259,6 +265,20 @@ export default {
         max-width: 100%;
       }
     }
+  }
+
+  .posterDescription__title {
+
+  }
+
+  .posterDescription__hr {
+    width: 80%;
+    margin: 0 auto;
+    color: $light-fa;
+  }
+
+  .posterDescription__caption {
+
   }
 
   .poster__overlay {

@@ -14,7 +14,7 @@
       Create new album
     </q-btn>
 
-    <p v-if="posters.length === 0" class="text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No posters yet... You can create one on the Home page...</p>
+    <p v-if="posters.length === 0" class="noItemMessage text-grey-10 q-pa-md bg-grey-2 rounded-borders outline block">No posters yet... You can create one on the Home page...</p>
 
     <!--Dialog for album create-->
     <q-dialog v-model="dialog" class="albumDialog">
@@ -87,10 +87,16 @@ export default {
 
 <style lang="scss" scoped>
 
+  @import "../../css/fonts";
+
   .albumDialog__card {
     width: 100%;
     min-width: 300px;
     max-width: 500px;
+  }
+
+  .noItemMessage {
+    /*<!--font-family: $ubuntu;-->*/
   }
 
 </style>

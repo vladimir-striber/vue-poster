@@ -39,12 +39,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "../css/fonts.scss";
 
   h1 {
     font-size: 32px;
     font-weight: 400;
-    font-family: $montserrat-bold;
+    /*<!--font-family: $montserrat-bold;-->*/
   }
 
 </style>

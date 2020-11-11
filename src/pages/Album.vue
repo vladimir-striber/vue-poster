@@ -6,7 +6,7 @@
 
         <div v-for="(poster, index) in albums[albumIndex].posters" :key="index" class="box" :class="background(poster.posterBackground)">
 
-          <img :src="poster.image"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
+          <img :src="poster.image" @click.stop="openFullScreenDialog"  alt="image" width="100%" height="100%" class="image q-ma-none"/>
 
           <!--<div class="poster__overlay">-->
             <!--<div class="poster__actions">-->
@@ -22,8 +22,9 @@
           <!--</div>-->
 
           <div class="posterDescription">
-            <div class="text-h6 text-grey-1"><span>{{poster.title}}</span></div>
-            <div class="text-grey-1"><span>{{poster.caption}}</span></div>
+            <div class="posterDescription__title text-uppercase text-h5 text-center text-grey-1"><span>{{poster.title}}</span></div>
+            <hr class="posterDescription__hr">
+            <div class="posterDescription__caption text-center text-caption text-grey-1"><span>{{poster.caption}}</span></div>
           </div>
 
         </div>
@@ -47,6 +48,9 @@ export default {
       } else {
         return 'bg-grey-10'
       }
+    },
+    openFullScreenDialog () {
+      this.$refs.FullScreenDialog.show()
     }
   }
 }
@@ -54,17 +58,13 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import "../css/fonts.scss";
-
   h1 {
     font-size: 32px;
     font-weight: 400;
-    font-family: $montserrat-bold;
   }
 
   .container {
     width: 100%;
-    /*margin: 0 auto;*/
     columns: 1;
     column-gap: 8px;
     @media screen and (min-width: $width-sm) {
@@ -101,7 +101,6 @@ export default {
     position: relative;
     background-color: darkslategrey;
     transition: ease-in-out 200ms;
-    /*max-height: 300px;*/
     margin-bottom: 12px;
     display: flex;
     flex-direction: column;
@@ -121,14 +120,25 @@ export default {
   .posterDescription {
     position: relative;
     padding: 4px;
-    /*bottom: 0;*/
-    /*left: 0;*/
+  }
+
+  .posterDescription__title {
+
+  }
+
+  .posterDescription__hr {
+    width: 80%;
+    margin: 0 auto;
+    color: $light-fa;
+  }
+
+  .posterDescription__caption {
+
   }
 
   .image {
     width: 100%;
     height: auto;
-    /*max-height: 100%;*/
   }
 
 </style>

@@ -52,6 +52,7 @@ export default {
 
   .q-item {
     color: $dark-7;
+    font-size: 16px;
   }
 
   .q-router-link--exact-active {

@@ -64,7 +64,7 @@
             />
             <q-btn
                 label="Delete"
-                color="primary"
+                color="warning"
                 v-close-popup
                 no-caps
                 class="col-8"
@@ -88,7 +88,6 @@ export default {
   data () {
     return {
       dialog: false,
-      maximizedToggle: true,
       imageSrc: '',
       confirm: false,
       deleteImageIndex: ''
@@ -118,7 +117,7 @@ export default {
   h1 {
     font-size: 32px;
     font-weight: 400;
-    font-family: $montserrat-bold;
+    /*<!--font-family: $montserrat-bold;-->*/
   }
 
   .container {
@@ -132,16 +131,21 @@ export default {
     @media screen and (min-width: $width-md) {
       columns: 3;
     }
-    @media screen and (min-width: $width-xl) {
-      columns: 4;
-    }
+    /*<!--@media screen and (min-width: $width-xl) {-->*/
+      /*<!--columns: 4;-->*/
+    /*<!--}-->*/
     .box {
       width: 100%;
       margin: 0 0 8px;
-      padding: 4px;
+      padding: 8px;
       background-color: $light-e;
       overflow: hidden;
       break-inside: avoid;
+      -webkit-transition: ease-in-out .1s;
+      -moz-transition: ease-in-out .1s;
+      -ms-transition: ease-in-out .1s;
+      -o-transition: ease-in-out .1s;
+      transition: ease-in-out .1s;
       &:hover {
         background-color: #ddd;
         transform: scale(1.03);
@@ -167,7 +171,11 @@ export default {
   }
 
   .image__overlay {
-    transition: 1s;
+    -webkit-transition: ease-in-out .3s;
+    -moz-transition: ease-in-out .3s;
+    -ms-transition: ease-in-out .3s;
+    -o-transition: ease-in-out .3s;
+    transition: ease-in-out .3s;
     display: none;
   }
 

@@ -27,7 +27,7 @@
       <q-list>
         <q-item-label
           header
-          class="text-grey-8"
+          class="dashboard text-grey-8 text-subtitle1"
         >
           Dashboard
         </q-item-label>
@@ -62,17 +62,14 @@ const linksData = [
     link: '/images'
   },
   {
-    title: 'Albums',
-    // caption: 'github.com/quasarframework',
-    icon: 'perm_media',
-    link: '/albums'
-  },
-  {
     title: 'Posters',
-    // caption: 'chat.quasar.dev',
-    // icon: 'branding_watermark',
     icon: 'developer_board',
     link: '/posters'
+  },
+  {
+    title: 'Albums',
+    icon: 'perm_media',
+    link: '/albums'
   }
 ]
 
@@ -91,5 +88,13 @@ export default {
 
 <style lang="scss" scoped>
   @import "../css/quasar.variables";
+
+  .title__motivation, .title__posters {
+    font-size: 24px;
+  }
+  .title__motivation {
+  }
+  .title__posters {
+  }
 
 </style>
