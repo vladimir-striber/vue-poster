@@ -134,7 +134,6 @@ export default {
     return {
       dialog: false,
       editIndex: '',
-      titleEdited: '',
       confirm: false,
       deleteAlbumIndex: ''
     }
@@ -153,7 +152,7 @@ export default {
     dialogStateMutate () {
       setTimeout(() => {
         this.dialog = true
-      })
+      }, 0)
     },
     openDeleteConfirmDialog (index) {
       this.confirm = true

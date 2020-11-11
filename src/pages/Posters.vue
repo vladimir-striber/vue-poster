@@ -37,12 +37,12 @@
 
         <!--Dialog for poster edit-->
         <q-dialog v-model="dialog" persistent class="posterDialog">
-          <q-card class="my-card posterDialog__card">
+          <q-card v-if="editIndex === 0 || editIndex > 0" class="my-card posterDialog__card">
             <q-img :src="imageSrc"></q-img>
 
             <q-card-section class="q-pt-none">
-              <q-input v-model="title" label="Title" color="secondary" />
-              <q-input v-model="caption" label="Caption" class="q-mb-md" color="secondary" />
+              <q-input v-model="posters[editIndex].title" label="Title" color="secondary" />
+              <q-input v-model="posters[editIndex].caption" label="Caption" class="q-mb-md" color="secondary" />
               <p class="text-grey-8 text-subtitle1 q-mb-xs">Background</p>
               <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
             </q-card-section>
@@ -57,7 +57,7 @@
                   no-caps
               ></q-btn>
               <q-btn
-                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
+                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: posters[editIndex].title, caption: posters[editIndex].caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
                   class="col-8"
                   color="primary"
                   label="Save"
@@ -157,6 +157,7 @@ export default {
   methods: {
     ...mapActions('posters', ['deletePoster', 'updatePoster']),
     openEditDialog (index) {
+      // debugger
       this.editIndex = index
       this.imageSrc = this.posters[index].image
       this.dialogStateMutate()
@@ -164,7 +165,7 @@ export default {
     dialogStateMutate () {
       setTimeout(() => {
         this.dialog = true
-      })
+      }, 100)
     },
     openDeleteConfirmDialog (index) {
       this.confirm = true
