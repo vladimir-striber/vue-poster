@@ -1,3 +1,5 @@
+import { Notify } from 'quasar'
+
 const state = {
   images: []
 }
@@ -11,7 +13,25 @@ const mutations = {
     console.log(this.state.images, 'images from mutation state')
   },
   deleteImage (state, payload) {
-    this.state.images.images.splice(payload, 1)
+    this.state.images.images.splice(payload.deleteImageIndex, 1)
+    console.log('deleteImage is happening')
+    Notify.create({
+      message: 'Image deleted',
+      type: 'negative',
+      color: 'warning',
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   }
 }
 

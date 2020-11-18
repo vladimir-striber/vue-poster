@@ -1,3 +1,5 @@
+import { Notify } from 'quasar'
+
 const state = {
   album: {},
   posters: [],
@@ -19,6 +21,24 @@ const mutations = {
     this.state.albums.posters = []
     // resetting albums
     this.state.albums.album = {}
+    Notify.create({
+      message: 'Album created',
+      type: 'positive',
+      color: 'green-6',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
     console.log(this.state.albums.album, 'album from mutations')
     console.log(this.state.albums.albums, 'albums from mutations')
   },
@@ -30,9 +50,46 @@ const mutations = {
         this.state.albums.albums[payload.index].posters.push(poster)
       }
     })
+    Notify.create({
+      message: 'Album updated',
+      type: 'positive',
+      color: 'green-6',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   },
   deleteAlbum (state, payload) {
-    this.state.albums.albums.splice(payload, 1)
+    console.log(payload, 'payload')
+    this.state.albums.albums.splice(payload.deleteAlbumIndex, 1)
+    Notify.create({
+      message: 'Album deleted',
+      type: 'negative',
+      color: 'warning',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   }
 }
 

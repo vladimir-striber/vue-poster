@@ -48,33 +48,7 @@
         </q-card>
       </q-dialog>
 
-      <!--Dialog for delete album confirmation-->
-      <q-dialog v-model="confirm">
-        <q-card>
-          <q-card-section class="row items-center">
-            <span>Are you sure you want to delete this image?</span>
-          </q-card-section>
-
-          <q-card-actions align="right" class="row q-pa-md">
-            <q-btn
-                flat
-                label="Cancel"
-                color="primary"
-                v-close-popup
-                no-caps
-                class="text-grey-8 col-grow"
-            />
-            <q-btn
-                label="Delete"
-                color="warning"
-                v-close-popup
-                no-caps
-                class="col-8"
-                @click="deleteImage(deleteImageIndex); confirm = false"
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+      <DeleteDialog v-model="confirm" :deleteImageIndex="deleteImageIndex" :imageDelete="true" />
 
     </div>
   </div>
@@ -85,8 +59,12 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import DeleteDialog from '../components/dialogs/DeleteDialog'
 export default {
   name: 'Images',
+  components: {
+    DeleteDialog
+  },
   data () {
     return {
       dialog: false,

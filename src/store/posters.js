@@ -1,3 +1,5 @@
+import { Notify } from 'quasar'
+
 const state = {
   posters: []
 }
@@ -9,12 +11,48 @@ const mutations = {
   uploadPoster (state, payload) {
     this.state.posters.posters.push(payload)
     console.log(this.state.posters, 'posters from mutation state')
+    Notify.create({
+      message: 'Poster created',
+      type: 'positive',
+      color: 'green-6',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   },
   updatePoster (state, payload) {
     this.state.posters.posters[payload.editIndex].title = payload.title
     this.state.posters.posters[payload.editIndex].caption = payload.caption
     this.state.posters.posters[payload.editIndex].posterBackground = payload.posterBackground
     console.log(this.state.posters, 'edit poster from mutation state')
+    Notify.create({
+      message: 'Poster updated',
+      type: 'positive',
+      color: 'green-6',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   },
   clearPosterSelections () {
     this.state.posters.posters.forEach((poster) => {
@@ -22,7 +60,25 @@ const mutations = {
     })
   },
   deletePoster (state, payload) {
-    this.state.posters.posters.splice(payload, 1)
+    this.state.posters.posters.splice(payload.deletePosterIndex, 1)
+    Notify.create({
+      message: 'Poster deleted',
+      type: 'negative',
+      color: 'warning',
+      timeout: 2500,
+      actions: [
+        {
+          icon: 'close',
+          round: true,
+          size: 'sm',
+          // for individual action (button):
+          attrs: {
+            'aria-label': 'Dismiss',
+            color: 'white'
+          }
+        }
+      ]
+    })
   }
 }
 

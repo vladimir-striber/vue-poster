@@ -4,7 +4,7 @@
       <q-uploader
           @added="fileAdded"
           url="http://localhost:8080"
-          accept=".jpg, .pdf, image/*, .png"
+          accept=".jpg, image/*, .png"
           multiple
           batch
           color="secondary"
@@ -20,7 +20,7 @@
               <q-icon name="add_box" class="q-mr-xs"></q-icon>
               <span>Select</span>
             </q-btn>
-            <q-btn v-if="scope.canUpload" @click="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()" no-caps color="primary">
+            <q-btn v-if="scope.canUpload" @click.stop="uploadFiles({ selectedFiles: selectedFiles }); scope.removeQueuedFiles()" no-caps color="primary">
               <q-icon name="check" class="q-mr-xs"></q-icon>
               <span>Save</span>
             </q-btn>

@@ -24,6 +24,9 @@
       bordered
       content-class="bg-grey-2"
     >
+      {{ setTotalItems() }}
+      <!--{{ setPosterItems() }}-->
+      <!--{{ setAlbumItems() }}-->
       <q-list>
         <q-item-label
           header
@@ -31,11 +34,30 @@
         >
           Dashboard
         </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item
+            v-for="(link, index) in essentialLinks"
+            :key="index"
+            clickable
+            tag="a"
+            :to="link.link"
+        >
+          <q-item-section
+              v-if="link.icon"
+              avatar
+          >
+            <q-icon :name="link.icon" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>{{ link.title }} &nbsp;
+              <!--<span v-if="index !== 0">[ {{ link.total }} ]</span>-->
+              <q-badge v-if="index !== 0" color="secondary" text-color="white" :label="link.total" />
+            </q-item-label>
+            <q-item-label caption>
+              {{ link.caption }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -46,41 +68,55 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Home',
-    // caption: 'Total images',
-    icon: 'home',
-    link: '/'
-  },
-  {
-    title: 'Images',
-    // caption: 'Total images',
-    icon: 'image',
-    link: '/images'
-  },
-  {
-    title: 'Posters',
-    icon: 'developer_board',
-    link: '/posters'
-  },
-  {
-    title: 'Albums',
-    icon: 'perm_media',
-    link: '/albums'
-  }
-]
+import { mapGetters } from 'vuex'
+// import EssentialLink from 'components/EssentialLink.vue'
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
+  // components: { EssentialLink },
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData,
-      totalImages: 35
+      essentialLinks: [
+        {
+          title: 'Home',
+          icon: 'home',
+          link: '/'
+        },
+        {
+          title: 'Images',
+          icon: 'image',
+          link: '/images'
+        },
+        {
+          title: 'Posters',
+          icon: 'developer_board',
+          link: '/posters'
+        },
+        {
+          title: 'Albums',
+          icon: 'perm_media',
+          link: '/albums'
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters('images', ['images']),
+    ...mapGetters('posters', ['posters']),
+    ...mapGetters('albums', ['albums'])
+  },
+  methods: {
+    setTotalItems () {
+      for (let i = 0; i < this.essentialLinks.length; i++) {
+        if (i === 1) {
+          this.essentialLinks[i].total = this.images.length
+        } else if (i === 2) {
+          this.essentialLinks[i].total = this.posters.length
+        } else if (i === 3) {
+          this.essentialLinks[i].total = this.albums.length
+        }
+      }
     }
   }
 }
@@ -92,9 +128,13 @@ export default {
   .title__motivation, .title__posters {
     font-size: 24px;
   }
-  .title__motivation {
+  .q-item {
+    color: $dark-7;
+    font-size: 16px;
   }
-  .title__posters {
+
+  .q-router-link--exact-active {
+    color: $primary;
   }
 
 </style>

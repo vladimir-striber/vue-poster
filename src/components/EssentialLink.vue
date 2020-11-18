@@ -12,7 +12,7 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label>{{ title }} &nbsp; <span>( {{ total }} )</span></q-item-label>
       <q-item-label caption>
         {{ caption }}
       </q-item-label>
@@ -28,20 +28,20 @@ export default {
       type: String,
       required: true
     },
-
     caption: {
       type: String,
       default: ''
     },
-
     link: {
       type: String,
       default: '#'
     },
-
     icon: {
       type: String,
       default: ''
+    },
+    total: {
+      type: Number
     }
   }
 }

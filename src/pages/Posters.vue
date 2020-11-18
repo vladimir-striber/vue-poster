@@ -37,66 +37,9 @@
           <div class="posterDescription__caption text-center text-caption text-grey-1"><span>{{poster.caption}}</span></div>
         </div>
 
-        <!--Dialog for poster edit-->
-        <q-dialog v-model="dialog" persistent class="posterDialog">
-          <q-card v-if="editIndex === 0 || editIndex > 0" class="my-card posterDialog__card">
-            <q-img :src="imageSrc"></q-img>
+        <EditPosterDialog v-if="dialog" v-model="dialog" :editIndex="editIndex" />
 
-            <q-card-section class="q-pt-none">
-              <q-input v-model="title" label="Title" color="secondary" />
-              <q-input v-model="caption" label="Caption" class="q-mb-md" color="secondary" />
-              <p class="text-grey-8 text-subtitle1 q-mb-xs">Background</p>
-              <q-checkbox v-for="(color, colorIndex) in colors" :key="colorIndex" v-model="color.state" keep-color :color="color.name" @input="selectColor(colorIndex)"/>
-            </q-card-section>
-
-            <q-card-actions align="right" class="row q-pa-md">
-              <q-btn
-                  flat
-                  color="primary"
-                  label="Cancel"
-                  class="text-grey-8 col-grow"
-                  v-close-popup
-                  no-caps
-              ></q-btn>
-              <q-btn
-                  @click="updatePoster({editIndex: editIndex, image: imageSrc, title: title, caption: caption, selected: false, posterBackground: posterBackground}); clearPosterDialog()"
-                  class="col-8"
-                  color="primary"
-                  label="Save"
-                  no-caps
-              ></q-btn>
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
-
-        <!--Dialog for delete album confirmation-->
-        <q-dialog v-model="confirm">
-          <q-card>
-            <q-card-section class="row items-center">
-              <span>Are you sure you want to delete this poster?</span>
-            </q-card-section>
-
-            <q-card-actions align="right" class="row q-pa-md">
-              <q-btn
-                  flat
-                  label="Cancel"
-                  color="primary"
-                  v-close-popup
-                  no-caps
-                  class="text-grey-8 col-grow"
-              />
-              <q-btn
-                  label="Delete"
-                  color="warning"
-                  v-close-popup
-                  no-caps
-                  class="col-8"
-                  @click="deletePoster(deletePosterIndex); confirm = false"
-              />
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
-
+        <DeleteDialog v-model="confirm" :deletePosterIndex="deletePosterIndex" :posterDelete="true" />
       </div>
     </div>
 
@@ -106,9 +49,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import EditPosterDialog from '../components/dialogs/EditPosterDialog'
+import DeleteDialog from '../components/dialogs/DeleteDialog'
 
 export default {
   name: 'Posters',
+  components: {
+    EditPosterDialog,
+    DeleteDialog
+  },
   data () {
     return {
       dialog: false,
@@ -118,52 +67,17 @@ export default {
       imageSrc: '',
       posterBackground: false,
       confirm: false,
-      deletePosterIndex: '',
-      colors: [
-        {
-          name: 'grey-10',
-          code: '#212121',
-          state: true
-        },
-        {
-          name: 'blue-grey-10',
-          code: '#263238',
-          state: false
-        },
-        {
-          name: 'teal-10 ',
-          code: '#004d40',
-          state: false
-        },
-        {
-          name: 'cyan-10',
-          code: '#006064',
-          state: false
-        },
-        {
-          name: 'deep-orange-10',
-          code: '#bf360c',
-          state: false
-        },
-        {
-          name: 'amber-10',
-          code: '#ff6f00',
-          state: false
-        }
-      ]
+      deletePosterIndex: ''
     }
   },
   computed: {
     ...mapGetters('posters', ['posters'])
   },
   methods: {
-    ...mapActions('posters', ['deletePoster', 'updatePoster']),
+    ...mapActions('posters', ['deletePoster']),
     openEditDialog (index) {
       // debugger
       this.editIndex = index
-      this.imageSrc = this.posters[index].image
-      this.title = this.posters[index].title
-      this.caption = this.posters[index].caption
       this.dialogStateMutate()
     },
     dialogStateMutate () {
@@ -171,46 +85,17 @@ export default {
         this.dialog = true
       }, 100)
     },
-    openDeleteConfirmDialog (index) {
-      this.confirm = true
-      this.deletePosterIndex = index
-    },
-    // Toggle checkbox' state
-    selectColor (colorIndex) {
-      this.posterBackground = this.colors[colorIndex].name
-      for (let i = 0; i < this.colors.length; i++) {
-        if (i === colorIndex) {
-          if (this.colors[i].state === true) {
-            this.colors[i].state = true
-          }
-        } else {
-          this.colors[i].state = false
-        }
-      }
-    },
-    // Resetting dialog input fields
-    clearPosterDialog () {
-      this.dialog = false
-      // this.title = ''
-      // this.caption = ''
-      // this.imageSrc = ''
-      // this.colors.forEach(color => {
-      //   color.state = false
-      // })
-      // for (let i = 0; i < this.colors.length; i++) {
-      //   if (i === 0) {
-      //     this.colors[i].state = true
-      //   } else {
-      //     this.colors[i].state = false
-      //   }
-      // }
-    },
     background (bgc) {
       if (bgc) {
         return `bg-${bgc}`
       } else {
         return 'bg-grey-10'
       }
+    },
+    openDeleteConfirmDialog (index) {
+      this.confirm = true
+      this.deletePosterIndex = index
+      console.log(this.deletePosterIndex, 'deletePosterIndex')
     }
   }
 }
@@ -224,12 +109,10 @@ export default {
   h1 {
     font-size: 32px;
     font-weight: 400;
-    /*<!--font-family: $montserrat-bold;-->*/
   }
 
   .container {
     width: 100%;
-    /*margin: 0 auto;*/
     columns: 1;
     column-gap: 8px;
     @media screen and (min-width: $width-sm) {
@@ -238,9 +121,6 @@ export default {
     @media screen and (min-width: $width-md) {
       columns: 3;
     }
-    /*<!--@media screen and (min-width: $width-xl) {-->*/
-      /*<!--columns: 4;-->*/
-    /*<!--}-->*/
     .box {
       position: relative;
       width: 100%;
